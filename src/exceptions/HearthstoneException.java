@@ -2,10 +2,10 @@ package exceptions;
 
 
 abstract public class HearthstoneException extends Exception {
-    HearthstoneException(){
+    public HearthstoneException(){
         super();
     }
-    HearthstoneException(String s){
+    public HearthstoneException(String s){
         super(s);
     }
 }

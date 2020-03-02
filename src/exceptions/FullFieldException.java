@@ -1,10 +1,10 @@
 package exceptions;
 
 public class FullFieldException extends HearthstoneException {
-    FullFieldException(){
+    public FullFieldException(){
 
     }
-    FullFieldException(String s){
+    public FullFieldException(String s){
         super(s);
     }
 
