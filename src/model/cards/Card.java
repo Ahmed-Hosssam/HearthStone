@@ -8,7 +8,7 @@ abstract public class Card {
 
     public Card(String name,int manaCost,Rarity rarity){
         this.name = name;
-        this.manaCost = manaCost;
+        this.manaCost = manaCost<0?0:manaCost>10?10:manaCost;
         this.rarity = rarity;
     }
 
