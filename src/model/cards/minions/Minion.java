@@ -78,4 +78,7 @@ public class Minion extends Card {
     public void setAttacked(boolean attacked) {
         this.attacked = attacked;
     }
+    public Minion clone(){
+        return new Minion(getName(),getManaCost(),getRarity(),attack,maxHP,taunt,divine,!sleeping);
+    }
 }

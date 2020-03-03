@@ -99,6 +99,33 @@ abstract public class Hero {
         return out;
     }
 
+    public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count) {
+        ArrayList<Minion> out = new ArrayList<Minion>();
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        for (int i = 0; i < minions.size(); i++) {
+            Minion m = minions.get(i);
+            if (m.getRarity() == Rarity.LEGENDARY) {
+                temp.add(i);
+            } else {
+                temp.add(i);
+                temp.add(i);
+            }
+        }
+        int lim = temp.size() - 1;
+        while (count-- > 0) {
+            int rand = (int) (Math.random() * lim);
+            out.add(minions.get(temp.get(rand)).clone());
+            int tmp = temp.get(rand);
+            temp.set(rand, temp.get(lim));
+            temp.set(lim, tmp);
+            lim--;
+        }
+        return out;
+    }
+
+    public abstract void buildDeck() throws IOException;
+
+
 //    public static void main(String[] args) throws IOException {
 //        System.out.println(getAllNeutralMinions("test_minion.csv"));
 //    }
