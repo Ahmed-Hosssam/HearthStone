@@ -1,5 +1,5 @@
 package engine;
-
+import model.heroes.Hero;
 public class Game {
     private Hero firstHero, secondHero, currentHero, opponent;
 
