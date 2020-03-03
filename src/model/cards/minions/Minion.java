@@ -44,7 +44,7 @@ public class Minion extends Card {
     }
 
     public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP>getMaxHP()?getMaxHP():currentHP;
+        this.currentHP = currentHP > getMaxHP() ? getMaxHP() : currentHP < 0 ? 0 : currentHP;
     }
 
     public boolean isTaunt() {

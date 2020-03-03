@@ -2,12 +2,12 @@ package model.heroes;
 
 import model.cards.Card;
 import model.cards.Rarity;
+import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
 
-
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 abstract public class Hero {
@@ -34,57 +34,26 @@ abstract public class Hero {
         return currentHP;
     }
 
-    public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
-    }
-
-    public boolean isHeroPowerUsed() {
-        return heroPowerUsed;
-    }
-
-    public void setHeroPowerUsed(boolean heroPowerUsed) {
-        this.heroPowerUsed = heroPowerUsed;
-    }
-
-    public int getTotalManaCrystals() {
-        return totalManaCrystals;
-    }
-
-    public void setTotalManaCrystals(int totalManaCrystals) {
-        this.totalManaCrystals = totalManaCrystals;
-    }
-
-    public int getCurrentManaCrystals() {
-        return currentManaCrystals;
-    }
-
-    public void setCurrentManaCrystals(int currentManaCrystals) {
-        this.currentManaCrystals = currentManaCrystals;
-    }
-
-    public ArrayList<Card> getDeck() {
-        return deck;
-    }
-
-    public ArrayList<Minion> getField() {
-        return field;
-    }
-
-    public Hero(String name) {
+    public Hero(String name) throws IOException {
         this.name = name;
         currentHP = 30;
-        totalManaCrystals = 1;
-        currentManaCrystals = 1;
-        // still has to build and deck
-        // fatigue Damage = ??
+        totalManaCrystals = 0;
+        currentManaCrystals = 0;
+        deck = new ArrayList<>();
+        fatigueDamage = 0;
+        buildDeck();
     }
 
     public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
         Scanner sc = new Scanner(new File(filePath));
-        ArrayList<Minion> out = new ArrayList<Minion>();
+        ArrayList<Minion> out = new ArrayList<>();
         while (sc.hasNext()) {
             String[] in = sc.nextLine().split(",");
             String name = in[0];
+            if (name.equals("Icehowl")) {
+                out.add(new Icehowl());
+                continue;
+            }
             int manaCost = Integer.parseInt(in[1]);
             char r = in[2].charAt(0);
             Rarity rarity = r == 'b' ? Rarity.BASIC : r == 'c' ? Rarity.COMMON : r == 'r' ? Rarity.RARE : r == 'e' ? Rarity.EPIC : Rarity.LEGENDARY;
@@ -111,14 +80,59 @@ abstract public class Hero {
                 temp.add(i);
             }
         }
-        int lim = temp.size() - 1;
+        int lim = temp.size();
         while (count-- > 0) {
             int rand = (int) (Math.random() * lim);
             out.add(minions.get(temp.get(rand)).clone());
-            temp.set(rand,lim);
             lim--;
+            temp.set(rand, temp.get(lim));
         }
         return out;
+    }
+
+    public final static void shuffle(ArrayList list) {
+        for (int i = list.size(); i > 0; i--) {
+            int rand = (int) (Math.random() * i);
+            Object temp = list.get(i - 1);
+            list.set(i - 1, list.get(rand));
+            list.set(rand, temp);
+        }
+    }
+
+    public boolean isHeroPowerUsed() {
+        return heroPowerUsed;
+    }
+
+    public void setHeroPowerUsed(boolean heroPowerUsed) {
+        this.heroPowerUsed = heroPowerUsed;
+    }
+
+    public int getTotalManaCrystals() {
+        return totalManaCrystals;
+    }
+
+    public void setTotalManaCrystals(int totalManaCrystals) {
+        this.totalManaCrystals = Math.min(totalManaCrystals, 10);
+    }
+
+    public int getCurrentManaCrystals() {
+        return currentManaCrystals;
+    }
+
+    public void setCurrentManaCrystals(int currentManaCrystals) {
+        this.currentManaCrystals = Math.min(currentManaCrystals, 10);
+    }
+
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
+
+    public ArrayList<Minion> getField() {
+        return field;
+    }
+
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = Math.min(currentHP, 30);
     }
 
     public abstract void buildDeck() throws IOException;
