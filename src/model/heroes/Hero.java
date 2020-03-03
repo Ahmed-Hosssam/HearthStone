@@ -115,7 +115,7 @@ abstract public class Hero {
         while (count-- > 0) {
             int rand = (int) (Math.random() * lim);
             out.add(minions.get(temp.get(rand)).clone());
-            temp.set(rand,lim);
+            temp.set(rand,temp.get(lim));
             lim--;
         }
         return out;
