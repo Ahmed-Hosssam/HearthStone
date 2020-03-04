@@ -3,7 +3,7 @@ package model.cards.minions;
 import model.cards.Rarity;
 
 import java.util.StringTokenizer;
-
+//Can only attack minions not heros
 public class Icehowl extends Minion {
 
     public Icehowl() {

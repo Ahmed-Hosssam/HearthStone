@@ -19,12 +19,11 @@ abstract public class Hero {
     private ArrayList<Card> deck; // Read Only
     private ArrayList<Minion> field; // Read Only
     private ArrayList<Card> hand; //Read Only
+    private int fatigueDamage; // The damage a hero receives when trying to draw a card from an empty deck , NEITHER READ NOR WRITE.
 
     public ArrayList<Card> getHand() {
         return hand;
     }
-
-    private int fatigueDamage; // The damage a hero receives when trying to draw a card from an empty deck , NEITHER READ NOR WRITE.
 
     public String getName() {
         return name;
@@ -39,7 +38,7 @@ abstract public class Hero {
         currentHP = 30;
         totalManaCrystals = 0;
         currentManaCrystals = 0;
-        deck = new ArrayList<>();
+        deck = new ArrayList<Card>();
         fatigueDamage = 0;
         buildDeck();
     }
