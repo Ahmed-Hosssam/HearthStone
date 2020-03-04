@@ -17,7 +17,7 @@ public class Priest extends Hero {
 
     @Override
     public void buildDeck() throws IOException {
-        ArrayList<Minion> temp = getAllNeutralMinions("C:/Users/Ahmed hossam/IdeaProjects/Test/neutral_minions_31951 (2).csv");
+        ArrayList<Minion> temp = getAllNeutralMinions("neutral_minions_31951 (2).csv");
         ArrayList<Minion> temp2 = getNeutralMinions(temp, 13);
         ArrayList<Card> deck = getDeck();
         for (Minion x : temp2)

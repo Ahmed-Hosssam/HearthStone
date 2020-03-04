@@ -137,9 +137,7 @@ abstract public class Hero {
     public abstract void buildDeck() throws IOException;
 
 
-//    public static void main(String[] args) throws IOException {
-//        System.out.println(getAllNeutralMinions("test_minion.csv"));
-//    }
+
 
 
 }
