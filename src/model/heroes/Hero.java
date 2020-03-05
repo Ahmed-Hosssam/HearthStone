@@ -8,6 +8,7 @@ import model.cards.minions.Minion;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 abstract public class Hero {
@@ -36,19 +37,23 @@ abstract public class Hero {
     public Hero(String name) throws IOException {
         this.name = name;
         currentHP = 30;
-        totalManaCrystals = 0;
-        currentManaCrystals = 0;
         deck = new ArrayList<Card>();
-        fatigueDamage = 0;
+        field = new ArrayList<Minion>();
+        hand = new ArrayList<Card>();
         buildDeck();
     }
 
     public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
         Scanner sc = new Scanner(new File(filePath));
         ArrayList<Minion> out = new ArrayList<>();
+        HashSet<String> hs = new HashSet<>();
         while (sc.hasNext()) {
             String[] in = sc.nextLine().split(",");
             String name = in[0];
+            if (hs.contains(name))
+                continue;
+            hs.add(name);
+
             if (name.equals("Icehowl")) {
                 out.add(new Icehowl());
                 continue;
@@ -135,9 +140,6 @@ abstract public class Hero {
     }
 
     public abstract void buildDeck() throws IOException;
-
-
-
 
 
 }
