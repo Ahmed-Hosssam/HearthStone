@@ -29,6 +29,5 @@ public class Priest extends Hero {
         deck.add(new ShadowWordDeath());
         deck.add(new ShadowWordDeath());
         deck.add(new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false));
-        shuffle(deck);
     }
 }

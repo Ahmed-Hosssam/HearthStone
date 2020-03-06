@@ -29,6 +29,5 @@ public class Mage extends Hero {
         deck.add(new Pyroblast());
         deck.add(new Pyroblast());
         deck.add(new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false, false, false));
-        shuffle(deck);
     }
 }

@@ -26,6 +26,5 @@ public class Hunter extends Hero {
         deck.add(new MultiShot());
         deck.add(new MultiShot());
         deck.add(new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false, false, true));
-        shuffle(deck);
     }
 }

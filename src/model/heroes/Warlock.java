@@ -30,6 +30,5 @@ public class Warlock  extends Hero{
         deck.add(new TwistingNether());
         deck.add(new TwistingNether());
         deck.add(new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false));
-        shuffle(deck);
     }
 }

@@ -41,6 +41,7 @@ abstract public class Hero {
         field = new ArrayList<Minion>();
         hand = new ArrayList<Card>();
         buildDeck();
+        shuffle();
     }
 
     public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
@@ -94,12 +95,12 @@ abstract public class Hero {
         return out;
     }
 
-    public final static void shuffle(ArrayList list) {
-        for (int i = list.size(); i > 0; i--) {
+    public final void shuffle() {
+        for (int i = deck.size(); i > 0; i--) {
             int rand = (int) (Math.random() * i);
-            Object temp = list.get(i - 1);
-            list.set(i - 1, list.get(rand));
-            list.set(rand, temp);
+            Card temp = deck.get(i - 1);
+            deck.set(i - 1, deck.get(rand));
+            deck.set(rand, temp);
         }
     }
 

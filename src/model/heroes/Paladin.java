@@ -26,6 +26,5 @@ public class Paladin extends Hero {
         deck.add(new LevelUp());
         deck.add(new LevelUp());
         deck.add(new Minion("Tirion Fordring", 4, Rarity.LEGENDARY, 6, 6, true, true, false));
-        shuffle(deck);
     }
 }
