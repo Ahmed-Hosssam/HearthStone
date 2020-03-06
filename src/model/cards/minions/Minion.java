@@ -15,7 +15,7 @@ public class Minion extends Card {
     public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine, boolean charge) {
         super(name, manaCost, rarity);
         this.attack = Math.max(attack, 0);
-        this.maxHP = maxHP;
+        this.maxHP = Math.max(maxHP, 0);
         this.currentHP = Math.max(maxHP, 0);
         this.taunt = taunt;
         this.divine = divine;
