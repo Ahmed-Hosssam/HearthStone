@@ -111,7 +111,7 @@ abstract public class Hero {
     }
 
     public void setTotalManaCrystals(int totalManaCrystals) {
-        this.totalManaCrystals = Math.min(totalManaCrystals, 10);
+        this.totalManaCrystals = Math.max(Math.min(totalManaCrystals, 10), 0);
     }
 
     public int getCurrentManaCrystals() {
@@ -119,7 +119,7 @@ abstract public class Hero {
     }
 
     public void setCurrentManaCrystals(int currentManaCrystals) {
-        this.currentManaCrystals = Math.min(currentManaCrystals, 10);
+        this.currentManaCrystals = Math.max(Math.min(currentManaCrystals, 10), 0);
     }
 
     public ArrayList<Card> getDeck() {
@@ -131,7 +131,7 @@ abstract public class Hero {
     }
 
     public void setCurrentHP(int currentHP) {
-        this.currentHP = Math.min(currentHP, 30);
+        this.currentHP = Math.max(Math.min(currentHP, 30), 0);
     }
 
     public abstract void buildDeck() throws IOException;
