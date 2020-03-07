@@ -8,6 +8,7 @@ import model.cards.minions.Minion;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -41,7 +42,9 @@ abstract public class Hero {
         field = new ArrayList<Minion>();
         hand = new ArrayList<Card>();
         buildDeck();
-        shuffle();
+
+        Collections.shuffle(getDeck());
+
     }
 
     public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
@@ -93,15 +96,6 @@ abstract public class Hero {
             temp.set(rand, temp.get(lim));
         }
         return out;
-    }
-
-    public final void shuffle() {
-        for (int i = deck.size(); i > 0; i--) {
-            int rand = (int) (Math.random() * i);
-            Card temp = deck.get(i - 1);
-            deck.set(i - 1, deck.get(rand));
-            deck.set(rand, temp);
-        }
     }
 
     public boolean isHeroPowerUsed() {

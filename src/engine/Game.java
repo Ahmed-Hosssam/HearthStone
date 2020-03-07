@@ -11,9 +11,11 @@ public class Game {
             currentHero = p1;
             opponent = p2;
             p1.setCurrentManaCrystals(1);
+            p1.setTotalManaCrystals(1);
         } else {
             currentHero = p2;
             p2.setCurrentManaCrystals(1);
+            p2.setTotalManaCrystals(1);
             opponent = p1;
         }
     }

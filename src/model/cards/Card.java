@@ -6,9 +6,9 @@ abstract public class Card {
     private int manaCost;
     private Rarity rarity;
 
-    public Card(String name,int manaCost,Rarity rarity){
+    public Card(String name, int manaCost, Rarity rarity) {
         this.name = name;
-        this.manaCost = manaCost<0?0:manaCost>10?10:manaCost;
+        this.manaCost = manaCost < 0 ? 0 : manaCost > 10 ? 10 : manaCost;
         this.rarity = rarity;
     }
 
@@ -25,7 +25,7 @@ abstract public class Card {
     }
 
     public void setManaCost(int manaCost) {
-        this.manaCost = manaCost>10?10:manaCost<0?0:manaCost;
+        this.manaCost = manaCost > 10 ? 10 : manaCost < 0 ? 0 : manaCost;
     }
 
     public Rarity getRarity() {

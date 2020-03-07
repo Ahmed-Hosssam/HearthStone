@@ -6,7 +6,7 @@ import model.cards.Rarity;
 public class Minion extends Card {
     private int attack;
     private int maxHP;
-    private  int currentHP;
+    private int currentHP;
     private boolean taunt;
     private boolean divine;
     private boolean sleeping;
@@ -16,7 +16,7 @@ public class Minion extends Card {
         super(name, manaCost, rarity);
         this.attack = Math.max(attack, 0);
         this.maxHP = Math.max(maxHP, 0);
-        this.currentHP = Math.max(maxHP, 0);
+        this.currentHP = this.maxHP;
         this.taunt = taunt;
         this.divine = divine;
         this.sleeping = !charge;
@@ -28,7 +28,7 @@ public class Minion extends Card {
     }
 
     public void setAttack(int attack) {
-        this.attack = attack<0?0:attack;
+        this.attack = attack < 0 ? 0 : attack;
     }
 
     public int getMaxHP() {
@@ -36,7 +36,7 @@ public class Minion extends Card {
     }
 
     public void setMaxHP(int maxHP) {
-        this.maxHP = maxHP;
+        this.maxHP = Math.max(maxHP, 0);
     }
 
     public int getCurrentHP() {
@@ -78,7 +78,9 @@ public class Minion extends Card {
     public void setAttacked(boolean attacked) {
         this.attacked = attacked;
     }
-    public Minion clone(){
-        return new Minion(getName(),getManaCost(),getRarity(),attack,maxHP,taunt,divine,!sleeping);
+
+    @Override
+    public Minion clone() {
+        return new Minion(getName(), getManaCost(), getRarity(), attack, maxHP, taunt, divine, !sleeping);
     }
 }

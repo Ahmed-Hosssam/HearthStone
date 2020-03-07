@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Warlock  extends Hero{
     public Warlock() throws IOException {
         super("Gul'dan");
-        // ask about the ' character
+
     }
 
     @Override
