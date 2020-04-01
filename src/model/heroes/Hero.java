@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
@@ -136,5 +137,10 @@ abstract public class Hero {
 
     public abstract void buildDeck() throws IOException;
 
+    public void useHeroPower() throws NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+
+    }
 
 }
