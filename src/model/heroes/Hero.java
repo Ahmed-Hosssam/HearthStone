@@ -1,11 +1,18 @@
 package model.heroes;
 
 import engine.ActionValidator;
+import exceptions.InvalidTargetException;
+import exceptions.NotEnoughManaException;
+import exceptions.NotYourTurnException;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
 import model.cards.minions.MinionListener;
+import model.cards.spells.AOESpell;
+import model.cards.spells.FieldSpell;
+import model.cards.spells.HeroTargetSpell;
+import model.cards.spells.MinionTargetSpell;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +32,7 @@ abstract public class Hero implements MinionListener {
     private int fatigueDamage; // The damage a hero receives when trying to draw a card from an empty deck , NEITHER READ NOR WRITE.
     private HeroListener listener;
     private ActionValidator validator;
+
     public ArrayList<Card> getHand() {
         return hand;
     }
@@ -139,6 +147,36 @@ abstract public class Hero implements MinionListener {
 
     public void setCurrentHP(int currentHP) {
         this.currentHP = Math.max(Math.min(currentHP, 30), 0);
+    }
+
+    public void validate(Card s) throws NotYourTurnException, NotEnoughManaException {
+        validator.validateTurn(this);
+        validator.validateManaCost(s);
+        getHand().remove(s);
+    }
+
+    public void castSpell(FieldSpell s) throws NotYourTurnException,
+            NotEnoughManaException {
+        validate((Card) s);
+        s.performAction(getField());
+    }
+
+    public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws
+            NotYourTurnException, NotEnoughManaException {
+        validate((Card) s);
+        s.performAction(oppField, getField());
+    }
+
+    public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException,
+            NotEnoughManaException, InvalidTargetException {
+        validate((Card) s);
+        s.performAction(m);
+    }
+
+    public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException,
+            NotEnoughManaException {
+        validate((Card) s);
+        s.performAction(h);
     }
 
     public abstract void buildDeck() throws IOException;
