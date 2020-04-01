@@ -1,6 +1,7 @@
 package model.heroes;
 
 import engine.ActionValidator;
+import exceptions.*;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
@@ -180,6 +181,38 @@ abstract public class Hero implements MinionListener {
     }
 
     public abstract void buildDeck() throws IOException;
+    public void useHeroPower() throws NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+        validator.validateTurn(this);
+        validator.validateUsingHeroPower(this);
+        if(this instanceof Paladin)
+            validator.validatePlayingMinion(new Minion("Silver Hand Recruit",1,Rarity.BASIC,1,1,false,false,false));
+    }
+    public void playMinion(Minion m) throws NotYourTurnException,
+            NotEnoughManaException, FullFieldException{
+        validator.validateManaCost(m);
+        validator.validatePlayingMinion(m);
+        validator.validateTurn(this);
+        getHand().remove(m);
+        getField().add(m);
+    }
+    public void attackWithMinion(Minion attacker, Minion target) throws
+            CannotAttackException, NotYourTurnException, TauntBypassException,
+            InvalidTargetException, NotSummonedException{
+        validator.validateTurn(this);
+        validator.validateAttack(attacker,target);
+        attacker.attack(target);
+    }
+    public void attackWithMinion(Minion attacker, Hero target) throws
+            CannotAttackException, NotYourTurnException, TauntBypassException,
+            NotSummonedException, InvalidTargetException{
+        validator.validateTurn(this);
+        validator.validateAttack(attacker,target);
+        attacker.attack(target);
+    }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -29,5 +30,19 @@ public class Priest extends Hero {
         deck.add(new ShadowWordDeath());
         deck.add(new ShadowWordDeath());
         deck.add(new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false));
+    }
+    public void useHeroPower(Minion minion) throws
+            NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+        super.useHeroPower();
+        minion.setCurrentHP(minion.getCurrentHP()+2);
+    }
+    public void useHeroPower(Hero hero) throws
+            NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+        super.useHeroPower();
+        hero.setCurrentHP(hero.getCurrentHP()+2);
     }
 }

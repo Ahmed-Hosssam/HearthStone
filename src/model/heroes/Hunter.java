@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -27,4 +28,12 @@ public class Hunter extends Hero {
         deck.add(new MultiShot());
         deck.add(new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false, false, true));
     }
+    public void useHeroPower() throws
+            NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+        super.useHeroPower();
+        getListener().damageOpponent(2);
+    }
+
 }

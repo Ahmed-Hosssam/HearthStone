@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -29,5 +30,20 @@ public class Mage extends Hero {
         deck.add(new Pyroblast());
         deck.add(new Pyroblast());
         deck.add(new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false, false, false));
+
+    }
+    public void useHeroPower(Minion minion) throws
+            NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+        super.useHeroPower();
+        minion.setCurrentHP(minion.getCurrentHP()-1);
+    }
+    public void useHeroPower(Hero hero) throws
+            NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+        super.useHeroPower();
+        hero.setCurrentHP(hero.getCurrentHP()-1);
     }
 }

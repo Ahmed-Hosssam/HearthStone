@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -30,5 +31,13 @@ public class Warlock  extends Hero{
         deck.add(new TwistingNether());
         deck.add(new TwistingNether());
         deck.add(new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false));
+    }
+    public void useHeroPower() throws
+            NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+        super.useHeroPower();
+        drawCard();
+        setCurrentHP(getCurrentHP()-2);
     }
 }

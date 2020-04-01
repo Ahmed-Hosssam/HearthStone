@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -26,5 +27,15 @@ public class Paladin extends Hero {
         deck.add(new LevelUp());
         deck.add(new LevelUp());
         deck.add(new Minion("Tirion Fordring", 4, Rarity.LEGENDARY, 6, 6, true, true, false));
+    }
+    public void useHeroPower() throws
+            NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException{
+        super.useHeroPower();
+
+
+        Minion m = new Minion("Silver Hand Recruit",1,Rarity.BASIC,1,1,false,false,false);
+        getField().add(m);
     }
 }
