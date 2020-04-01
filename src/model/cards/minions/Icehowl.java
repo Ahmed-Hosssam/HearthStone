@@ -2,8 +2,6 @@ package model.cards.minions;
 
 import model.cards.Rarity;
 
-import java.util.ArrayList;
-
 //Can only attack minions not heros
 public class Icehowl extends Minion {
 
@@ -15,6 +13,4 @@ public class Icehowl extends Minion {
     public Icehowl clone() {
         return new Icehowl();
     }
-
-
 }
