@@ -1,19 +1,19 @@
 package model.heroes;
 
-import exceptions.*;
+import engine.ActionValidator;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
+import model.cards.minions.MinionListener;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Scanner;
 
-abstract public class Hero {
+abstract public class Hero implements MinionListener {
     private String name; // Read_Only
     private int currentHP; //The current health points of the hero. All heroes initially have 30 health point and can never exceed it.
     private boolean heroPowerUsed; // used their power during this turn
@@ -23,9 +23,40 @@ abstract public class Hero {
     private ArrayList<Minion> field; // Read Only
     private ArrayList<Card> hand; //Read Only
     private int fatigueDamage; // The damage a hero receives when trying to draw a card from an empty deck , NEITHER READ NOR WRITE.
-
+    private HeroListener listener;
+    private ActionValidator validator;
     public ArrayList<Card> getHand() {
         return hand;
+    }
+
+    public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count) {
+        ArrayList<Minion> out = new ArrayList<Minion>();
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        for (int i = 0; i < minions.size(); i++) {
+            Minion m = minions.get(i);
+            if (m.getRarity() == Rarity.LEGENDARY) {
+                temp.add(i);
+            } else {
+                temp.add(i);
+                temp.add(i);
+            }
+        }
+        int lim = temp.size();
+        while (count-- > 0) {
+            int rand = (int) (Math.random() * lim);
+            out.add(minions.get(temp.get(rand)));
+            lim--;
+            temp.set(rand, temp.get(lim));
+        }
+        return out;
+    }
+
+    public void setValidator(ActionValidator validator) {
+        this.validator = validator;
+    }
+
+    public HeroListener getListener() {
+        return listener;
     }
 
     public String getName() {
@@ -43,22 +74,15 @@ abstract public class Hero {
         field = new ArrayList<Minion>();
         hand = new ArrayList<Card>();
         buildDeck();
-
         Collections.shuffle(getDeck());
-
     }
 
     public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
         Scanner sc = new Scanner(new File(filePath));
         ArrayList<Minion> out = new ArrayList<>();
-        HashSet<String> hs = new HashSet<>();
         while (sc.hasNext()) {
             String[] in = sc.nextLine().split(",");
             String name = in[0];
-            if (hs.contains(name))
-                continue;
-            hs.add(name);
-
             if (name.equals("Icehowl")) {
                 out.add(new Icehowl());
                 continue;
@@ -77,26 +101,8 @@ abstract public class Hero {
         return out;
     }
 
-    public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count) {
-        ArrayList<Minion> out = new ArrayList<Minion>();
-        ArrayList<Integer> temp = new ArrayList<Integer>();
-        for (int i = 0; i < minions.size(); i++) {
-            Minion m = minions.get(i);
-            if (m.getRarity() == Rarity.LEGENDARY) {
-                temp.add(i);
-            } else {
-                temp.add(i);
-                temp.add(i);
-            }
-        }
-        int lim = temp.size();
-        while (count-- > 0) {
-            int rand = (int) (Math.random() * lim);
-            out.add(minions.get(temp.get(rand)).clone());
-            lim--;
-            temp.set(rand, temp.get(lim));
-        }
-        return out;
+    public void setListener(HeroListener listener) {
+        this.listener = listener;
     }
 
     public boolean isHeroPowerUsed() {
@@ -137,10 +143,5 @@ abstract public class Hero {
 
     public abstract void buildDeck() throws IOException;
 
-    public void useHeroPower() throws NotEnoughManaException,
-            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
-            FullFieldException, CloneNotSupportedException{
-
-    }
 
 }

@@ -1,6 +1,9 @@
 package engine;
+
 import model.heroes.Hero;
-public class Game {
+import model.heroes.HeroListener;
+
+public class Game implements ActionValidator, HeroListener {
     private Hero firstHero, secondHero, currentHero, opponent;
 
     public Game(Hero p1, Hero p2) {
