@@ -48,6 +48,8 @@ public class Minion extends Card implements Cloneable {
 
     public void setCurrentHP(int currentHP) {
         this.currentHP = currentHP > getMaxHP() ? getMaxHP() : currentHP < 0 ? 0 : currentHP;
+        if(this.currentHP==0)
+            listener.onMinionDeath(this);
     }
 
     public boolean isTaunt() {

@@ -212,7 +212,8 @@ abstract public class Hero implements MinionListener {
         attacker.attack(target);
     }
 
-
-
-
+    @Override
+    public void onMinionDeath(Minion m) {
+        getField().remove(m);
+    }
 }
