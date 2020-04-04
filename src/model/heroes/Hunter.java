@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Hunter extends Hero {
-    public Hunter() throws IOException {
+    public Hunter() throws IOException, CloneNotSupportedException {
         super("Rexxar");
     }
 

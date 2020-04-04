@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Warlock  extends Hero{
-    public Warlock() throws IOException {
+    public Warlock() throws IOException, CloneNotSupportedException {
         super("Gul'dan");
 
     }
@@ -31,6 +31,9 @@ public class Warlock  extends Hero{
         deck.add(new TwistingNether());
         deck.add(new TwistingNether());
         deck.add(new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false));
+        for (Card m : deck)
+            if (m instanceof Minion)
+                ((Minion) m).setListener(this);
     }
     public void useHeroPower() throws
             NotEnoughManaException,

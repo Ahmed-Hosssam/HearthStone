@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Paladin extends Hero {
-    public Paladin() throws IOException {
+    public Paladin() throws IOException, CloneNotSupportedException {
         super("Uther Lightbringer");
     }
 
@@ -27,6 +27,9 @@ public class Paladin extends Hero {
         deck.add(new LevelUp());
         deck.add(new LevelUp());
         deck.add(new Minion("Tirion Fordring", 4, Rarity.LEGENDARY, 6, 6, true, true, false));
+        for (Card m : deck)
+            if (m instanceof Minion)
+                ((Minion) m).setListener(this);
     }
     public void useHeroPower() throws
             NotEnoughManaException,

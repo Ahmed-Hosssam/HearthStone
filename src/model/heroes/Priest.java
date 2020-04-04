@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Priest extends Hero {
-    public Priest() throws IOException {
+    public Priest() throws IOException, CloneNotSupportedException {
         super("Anduin Wrynn");
     }
 
@@ -30,13 +30,25 @@ public class Priest extends Hero {
         deck.add(new ShadowWordDeath());
         deck.add(new ShadowWordDeath());
         deck.add(new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false));
+        for (Card m : deck)
+            if (m instanceof Minion)
+                ((Minion) m).setListener(this);
     }
     public void useHeroPower(Minion minion) throws
             NotEnoughManaException,
             HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
             FullFieldException, CloneNotSupportedException{
         super.useHeroPower();
-        minion.setCurrentHP(minion.getCurrentHP()+2);
+        boolean f = true;
+        for (Minion m:getField())
+            if (m.getName().equals("Prophet Velen")){
+                f = false;
+                break;
+            }
+        if (f)
+            minion.setCurrentHP(minion.getCurrentHP()+2);
+        else
+            minion.setCurrentHP(minion.getCurrentHP()+8);
     }
     public void useHeroPower(Hero hero) throws
             NotEnoughManaException,

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Mage extends Hero {
-    public Mage() throws IOException {
+    public Mage() throws IOException, CloneNotSupportedException {
         super("Jaina Proudmoore");
     }
 
@@ -30,6 +30,9 @@ public class Mage extends Hero {
         deck.add(new Pyroblast());
         deck.add(new Pyroblast());
         deck.add(new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false, false, false));
+        for (Card m : deck)
+            if (m instanceof Minion)
+                ((Minion) m).setListener(this);
 
     }
     public void useHeroPower(Minion minion) throws

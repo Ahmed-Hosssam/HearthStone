@@ -11,6 +11,11 @@ import java.util.ArrayList;
 
 public class Game implements ActionValidator, HeroListener {
     private Hero firstHero, secondHero, currentHero, opponent;
+    private GameListener listener;
+
+    public void setListener(GameListener listener) {
+        this.listener = listener;
+    }
 
     public Game(Hero p1, Hero p2) {
         int rand = (int) (Math.random() * 2);
@@ -27,6 +32,12 @@ public class Game implements ActionValidator, HeroListener {
             p2.setTotalManaCrystals(1);
             opponent = p1;
         }
+
+        currentHero.setListener(this);
+        opponent.setListener(this);
+        currentHero.setValidator(this);
+        opponent.setValidator(this);
+
     }
 
     public Hero getCurrentHero() {
@@ -115,6 +126,8 @@ public class Game implements ActionValidator, HeroListener {
             m.setAttacked(false);
             m.setSleeping(false);
         }
-        drawCard();
+        currentHero.drawCard();
     }
+
+
 }

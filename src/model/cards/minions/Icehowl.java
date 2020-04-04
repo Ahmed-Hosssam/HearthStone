@@ -13,4 +13,6 @@ public class Icehowl extends Minion {
     public Icehowl clone() {
         return new Icehowl();
     }
+
+
 }
