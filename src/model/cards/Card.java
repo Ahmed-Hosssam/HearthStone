@@ -33,7 +33,7 @@ abstract public class Card implements Cloneable {
     }
 
     @Override
-    protected Card clone() throws CloneNotSupportedException {
+    public Card clone() throws CloneNotSupportedException {
         return (Card) super.clone();
     }
 }

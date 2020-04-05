@@ -94,13 +94,16 @@ public class Minion extends Card implements Cloneable {
     }
 
     public void attack(Minion target) {
+        attacked=true;
         helperAttack(target);
         target.helperAttack(this);
     }
 
     public void helperAttack(Minion target) {
+        if(getAttack()==0)
+            return;
         if (target.isDivine()) {
-            setDivine(false);
+            target.setDivine(false);
         } else {
             target.setCurrentHP(target.getCurrentHP() - this.getAttack());
         }
@@ -109,6 +112,7 @@ public class Minion extends Card implements Cloneable {
     public void attack(Hero target) throws InvalidTargetException {
         if (this instanceof Icehowl)
             throw new InvalidTargetException();
+        attacked=true;
         target.setCurrentHP(target.getCurrentHP() - getAttack());
     }
 }

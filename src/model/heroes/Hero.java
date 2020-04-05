@@ -35,7 +35,7 @@ abstract public class Hero implements MinionListener {
         return hand;
     }
 
-    public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count) {
+    public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count)  {
         ArrayList<Minion> out = new ArrayList<Minion>();
         ArrayList<Integer> temp = new ArrayList<Integer>();
         for (int i = 0; i < minions.size(); i++) {
@@ -50,7 +50,13 @@ abstract public class Hero implements MinionListener {
         int lim = temp.size();
         while (count-- > 0) {
             int rand = (int) (Math.random() * lim);
-            out.add(minions.get(temp.get(rand)));
+            try {
+                out.add(minions.get(temp.get(rand)).clone());
+            }catch (CloneNotSupportedException e){
+
+            }
+
+
             lim--;
             temp.set(rand, temp.get(lim));
         }
@@ -165,7 +171,7 @@ abstract public class Hero implements MinionListener {
                     ((Card) s).setManaCost(((Card) s).getManaCost()-4);
                     break;
                 }
-
+        setCurrentManaCrystals(getCurrentManaCrystals()-((Card) s).getManaCost());
         s.performAction(getField());
 
     }
@@ -179,6 +185,7 @@ abstract public class Hero implements MinionListener {
                     ((Card) s).setManaCost(((Card) s).getManaCost()-4);
                     break;
                 }
+        setCurrentManaCrystals(getCurrentManaCrystals()-((Card) s).getManaCost());
         s.performAction(oppField, getField());
     }
 
@@ -191,6 +198,7 @@ abstract public class Hero implements MinionListener {
                     ((Card) s).setManaCost(((Card) s).getManaCost()-4);
                     break;
                 }
+        setCurrentManaCrystals(getCurrentManaCrystals()-((Card) s).getManaCost());
         s.performAction(m);
     }
 
@@ -203,6 +211,7 @@ abstract public class Hero implements MinionListener {
                     ((Card) s).setManaCost(((Card) s).getManaCost()-4);
                     break;
                 }
+        setCurrentManaCrystals(getCurrentManaCrystals()-((Card) s).getManaCost());
         s.performAction(h);
     }
 
@@ -216,7 +225,8 @@ abstract public class Hero implements MinionListener {
                     ((Card) s).setManaCost(((Card) s).getManaCost()-4);
                     break;
                 }
-        s.performAction(m);
+        setCurrentManaCrystals(getCurrentManaCrystals()-((Card) s).getManaCost());
+        setCurrentHP(s.performAction(m)+getCurrentHP());
     }
 
     public void endTurn() throws FullHandException, CloneNotSupportedException {
@@ -236,7 +246,7 @@ abstract public class Hero implements MinionListener {
             if (hand.size() == 10)
                 throw new FullHandException(drawn);
             hand.add(drawn);
-            if (this instanceof Warlock)
+            if (this instanceof Warlock && drawn instanceof Minion)
                 for (Minion mm :field)
                     if (mm.getName().equals("Wilfred Fizzlebang")) {
                         drawn.setManaCost(0);
@@ -246,7 +256,7 @@ abstract public class Hero implements MinionListener {
             for (Minion m :field)
                 if (m.getName().equals("Chromaggus")){
                     if (hand.size() < 10)
-                        hand.add(drawn);
+                        hand.add(drawn.clone());
                     break;
                 }
         }
@@ -260,14 +270,19 @@ abstract public class Hero implements MinionListener {
             FullFieldException, CloneNotSupportedException{
         validator.validateTurn(this);
         validator.validateUsingHeroPower(this);
-        if(this instanceof Paladin)
-            validator.validatePlayingMinion(new Minion("Silver Hand Recruit",1,Rarity.BASIC,1,1,false,false,false));
+        if(this instanceof Paladin && getField().size()==7)
+            throw new FullFieldException();
+        setCurrentManaCrystals(getCurrentManaCrystals()-2);
+        setHeroPowerUsed(true);
+//        if(this instanceof Paladin)
+//            validator.validatePlayingMinion(new Minion("Silver Hand Recruit",1,Rarity.BASIC,1,1,false,false,false));
     }
     public void playMinion(Minion m) throws NotYourTurnException,
             NotEnoughManaException, FullFieldException{
+        validator.validateTurn(this);
         validator.validateManaCost(m);
         validator.validatePlayingMinion(m);
-        validator.validateTurn(this);
+        setCurrentManaCrystals(getCurrentManaCrystals()-m.getManaCost());
         getHand().remove(m);
         getField().add(m);
     }
@@ -276,6 +291,7 @@ abstract public class Hero implements MinionListener {
             InvalidTargetException, NotSummonedException{
         validator.validateTurn(this);
         validator.validateAttack(attacker,target);
+
         attacker.attack(target);
     }
     public void attackWithMinion(Minion attacker, Hero target) throws

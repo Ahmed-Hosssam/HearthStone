@@ -16,17 +16,22 @@ public class Hunter extends Hero {
     }
 
     @Override
-    public void buildDeck() throws IOException {
+    public void buildDeck() throws IOException, CloneNotSupportedException {
         ArrayList<Minion> temp = getAllNeutralMinions("neutral_minions_31951 (2).csv");
         ArrayList<Minion> temp2 = getNeutralMinions(temp, 15);
         ArrayList<Card> deck = getDeck();
-        for (Minion x : temp2)
+        for (Minion x : temp2) {
             deck.add(x);
+            x.setListener(this);
+        }
         deck.add(new KillCommand());
         deck.add(new KillCommand());
         deck.add(new MultiShot());
         deck.add(new MultiShot());
-        deck.add(new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false, false, true));
+        Minion king= new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false, false, true);
+        king.setListener(this);
+        deck.add(king);
+
     }
     public void useHeroPower() throws
             NotEnoughManaException,

@@ -35,9 +35,8 @@ public class Paladin extends Hero {
             NotEnoughManaException,
             HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
             FullFieldException, CloneNotSupportedException{
+
         super.useHeroPower();
-
-
         Minion m = new Minion("Silver Hand Recruit",1,Rarity.BASIC,1,1,false,false,false);
         getField().add(m);
     }

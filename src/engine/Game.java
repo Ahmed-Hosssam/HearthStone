@@ -17,7 +17,7 @@ public class Game implements ActionValidator, HeroListener {
         this.listener = listener;
     }
 
-    public Game(Hero p1, Hero p2) {
+    public Game(Hero p1, Hero p2) throws FullHandException, CloneNotSupportedException {
         int rand = (int) (Math.random() * 2);
         firstHero = p1;
         secondHero = p2;
@@ -37,6 +37,12 @@ public class Game implements ActionValidator, HeroListener {
         opponent.setListener(this);
         currentHero.setValidator(this);
         opponent.setValidator(this);
+        for(int i=0;i<3;i++) {
+            currentHero.drawCard();
+            opponent.drawCard();
+        }
+        opponent.drawCard();
+
 
     }
 
@@ -56,9 +62,11 @@ public class Game implements ActionValidator, HeroListener {
     // always validate turn first
     @Override
     public void validateAttack(Minion attacker, Minion target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-        if(attacker.isSleeping() || attacker.isAttacked())
+        if(attacker.isSleeping() || attacker.isAttacked()||attacker.getAttack()==0)
             throw new CannotAttackException();
-        if(currentHero.getHand().contains(attacker))
+        if(currentHero.getField().contains(attacker)  && currentHero.getField().contains(target))
+            throw new InvalidTargetException();
+        if(!currentHero.getField().contains(attacker) || !opponent.getField().contains(target))
             throw  new NotSummonedException();
         if(!target.isTaunt() && hasTaunt(opponent.getField()))
             throw new TauntBypassException();
@@ -74,9 +82,9 @@ public class Game implements ActionValidator, HeroListener {
 
     @Override
     public void validateAttack(Minion attacker, Hero target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-        if(attacker.isSleeping() || attacker.isAttacked())
+        if(attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack()==0)
             throw new CannotAttackException();
-        if(currentHero.getHand().contains(attacker))
+        if(!currentHero.getField().contains(attacker))
             throw  new NotSummonedException();
         if(hasTaunt(opponent.getField()))
             throw new TauntBypassException();
@@ -106,7 +114,7 @@ public class Game implements ActionValidator, HeroListener {
 
     @Override
     public void onHeroDeath() {
-
+        listener.onGameOver();
     }
 
     @Override
