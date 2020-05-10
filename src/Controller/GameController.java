@@ -6,10 +6,12 @@ import exceptions.FullHandException;
 import model.heroes.*;
 import view.GameView;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -46,6 +48,33 @@ public class GameController implements GameListener, ActionListener {
         }
 
     }
+
+//     static void playSound(String soundFile) {
+//         AudioInputStream audioInputStream = null;
+//         try {
+//             audioInputStream = AudioSystem.getAudioInputStream(new File(soundFile).getAbsoluteFile());
+//         } catch (UnsupportedAudioFileException e) {
+//             e.printStackTrace();
+//         } catch (IOException e) {
+//             e.printStackTrace();
+//         }
+//         Clip clip = null;
+//         try {
+//             clip = AudioSystem.getClip();
+//         } catch (LineUnavailableException e) {
+//             e.printStackTrace();
+//         }
+//         try {
+//             clip.open(audioInputStream);
+//         } catch (LineUnavailableException e) {
+//             e.printStackTrace();
+//         } catch (IOException e) {
+//             e.printStackTrace();
+//         }
+//         clip.start();
+//    }
+
+
     public Hero switchOnHeros (JButton b) {
         Hero p = null;
         switch (b.getActionCommand()) {
@@ -101,6 +130,8 @@ public class GameController implements GameListener, ActionListener {
         return p;
     }
 
+
+
     @Override
     public void onGameOver() {
 
@@ -139,5 +170,6 @@ public class GameController implements GameListener, ActionListener {
 
     public static void main(String[] args) {
         new GameController();
+//        playSound("sounds/Background Music/Mulligan.ogg");
     }
 }
