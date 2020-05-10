@@ -23,7 +23,7 @@ public class GameController implements GameListener, ActionListener {
     private Hero p1;
     private Hero p2;
     private ArrayList<JButton> herosButtons;
-    int c = 0;
+    static int c = 0;
     public GameController () {
         view = new GameView();
 
@@ -143,27 +143,29 @@ public class GameController implements GameListener, ActionListener {
 //        choosing players' heros:
         Hero p = null;
         if (!b.getActionCommand().equals("Exit")) {
+            p = switchOnHeros(b);
             if (c == 0) {
-                p = switchOnHeros(b);
-                c++;
-            }
-        }
-        if (c == 1) {
-            view.getHerosMenueLabel().setText("Second Player: ");
-            p1 = p;
-        }
-        else if (c == 2) {
-            p2 = p;
-            try {
-                model = new Game(p1,p2);
-            } catch (FullHandException ex) {
-                ex.printStackTrace();
-            } catch (CloneNotSupportedException ex) {
-                ex.printStackTrace();
+                view.getHerosMenueLabel().setText("Second Player Hero");
+                p1 = p;
+
+            } else if (c == 1) {
+                p2 = p;
+                try {
+                    model = new Game(p1, p2);
+                } catch (FullHandException ex) {
+                    ex.printStackTrace();
+                } catch (CloneNotSupportedException ex) {
+                    ex.printStackTrace();
+                }
+                model.setListener(this);
+                view.createGamePlay();
+
             }
             c++;
         }
+
 //        ......................
+
 
 
     }

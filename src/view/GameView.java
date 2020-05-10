@@ -19,8 +19,12 @@ public class GameView extends JFrame {
     }
 
     private JPanel herosMenue;
-    private JLabel herosMenueLabel = new JLabel("First Player:");
-
+    private JLabel herosMenueLabel = new JLabel("First Player Hero");
+    private Insets insets;
+    private Dimension size;
+    private JPanel curr;
+    private JPanel oppo;
+    private JButton exit;
     public JLabel getHerosMenueLabel() {
         return herosMenueLabel;
     }
@@ -28,21 +32,22 @@ public class GameView extends JFrame {
     public GameView(){
 
         setSize(new Dimension(1440,810));
+        try {
+            setContentPane(new ImagePanel(ImageIO.read(new File("images/backgrounds/main.jpg"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setTitle("HearthStone");
         setResizable(false);
         setMinimumSize(new Dimension(getWidth(),getHeight()));
         setMinimumSize(new Dimension(getWidth(),getHeight()));
-        setVisible(true);
-        try {
-            setContentPane(new ImagePanel(ImageIO.read(new File("images/backgrounds/main.jpg"))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
 
         setLayout(null);
-        Insets insets = getInsets();
+        insets = getInsets();
 
 
 
@@ -51,13 +56,15 @@ public class GameView extends JFrame {
         herosMenue = new JPanel();
         herosMenue.setLayout(new GridLayout(0,1));
         herosMenue.add(herosMenueLabel);
+        herosMenueLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        herosMenueLabel.setVerticalAlignment(SwingConstants.CENTER);
         add(herosMenue);
         herosMenue.setPreferredSize(new Dimension(400,getHeight()-100));
-        Dimension size = herosMenue.getPreferredSize();
+        size = herosMenue.getPreferredSize();
         herosMenue.setBounds(520+insets.left,10+insets.right,size.width,size.height);
 
         //        Exit Button
-        JButton exit = new JButton("Exit");
+        exit = new JButton("Exit");
 
         add(exit);
         exit.addActionListener(new ActionListener() {
@@ -68,14 +75,40 @@ public class GameView extends JFrame {
         });
         size = exit.getPreferredSize();
         exit.setBounds(insets.left + 1350,insets.right + 710,size.width,size.height);
-        //playSound("sounds/Background Music/Mulligan.ogg");
+
         pack();
+        setVisible(true);
         revalidate();
         repaint();
     }
 
 
+    public void createGamePlay () {
 
+        remove(herosMenue);
+        remove(exit);
+        curr = new JPanel();
+        curr.setPreferredSize(new Dimension(1400,380));
+        size = curr.getPreferredSize();
+        curr.setBounds(insets.left + 10,insets.right+10,size.width,size.height);
+        curr.setBorder(BorderFactory.createLineBorder(Color.black));
+        oppo = new JPanel();
+        oppo.setPreferredSize(new Dimension(1400,380));
+        size = oppo.getPreferredSize();
+        oppo.setBounds(insets.left + 10,insets.right+10+curr.getHeight(),size.width,size.height);
+        oppo.setBorder(BorderFactory.createLineBorder(Color.black));
+        JPanel temp = curr;
+        curr = oppo;
+        oppo = temp;
+        add(curr);
+        add(oppo);
+
+
+
+        pack();
+        revalidate();
+        repaint();
+    }
     class ImagePanel extends JComponent {
         private Image image;
         public ImagePanel(Image image) {
