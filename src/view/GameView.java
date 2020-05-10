@@ -41,15 +41,8 @@ public class GameView extends JFrame {
         setResizable(false);
         setMinimumSize(new Dimension(getWidth(),getHeight()));
         setMinimumSize(new Dimension(getWidth(),getHeight()));
-
-
-
         setLayout(null);
         insets = getInsets();
-
-
-
-
 //      Heros menue
         herosMenue = new JPanel();
         herosMenue.setLayout(new GridLayout(0,1));
@@ -105,62 +98,26 @@ public class GameView extends JFrame {
         add(currPanel);
         add(oppoPanel);
 
-//      styling current hero panel -> the one in the bottom
-        JPanel curHeroPanel = new JPanel();
-        curHeroPanel.setPreferredSize(new Dimension(200,280));
-        positioning(curHeroPanel, currPanel.getInsets(),(currPanel.getWidth()) - 210,currPanel.getHeight()-300);
-        JButton selectCurHeroButton = new JButton("Select");
-        curHeroPanel.add(selectCurHeroButton,BorderLayout.NORTH);
-        JTextArea curHeroInfo = new JTextArea();
-        curHeroInfo.setText("name:\n current HP:");
-        curHeroInfo.setEditable(false);
-        curHeroInfo.setPreferredSize(new Dimension(180,200));
-        curHeroPanel.add(curHeroInfo,BorderLayout.SOUTH);
-        curHeroPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        currPanel.add(curHeroPanel);
 
-        JPanel curHeroDeck = new JPanel();
-        curHeroDeck.setPreferredSize(new Dimension(200,280));
-        positioning(curHeroDeck,currPanel.getInsets(),20,currPanel.getHeight()-300);
-
-        JTextArea curHeroDeckInfo = new JTextArea();
-        curHeroDeckInfo.setText("name:\n current HP:");
-        curHeroDeckInfo.setEditable(false);
-        curHeroDeckInfo.setPreferredSize(new Dimension(180,240));
-        curHeroDeck.setBorder(BorderFactory.createLineBorder(Color.black));
-        curHeroDeck.add(curHeroDeckInfo);
-        currPanel.add(curHeroDeck);
-
-        JPanel curHeroField = new JPanel();
-        curHeroField.add(new JLabel("Field"));
-        curHeroField.setBorder(BorderFactory.createLineBorder(Color.black));
-        curHeroField.setPreferredSize(new Dimension(950,(currPanel.getHeight()/2)-20));
-        positioning(curHeroField,currPanel.getInsets(),230,10);
-        currPanel.add(curHeroField);
-
-        JPanel curHeroHand = new JPanel();
-        curHeroHand.add(new JLabel("Hand"));
-        curHeroHand.setBorder(BorderFactory.createLineBorder(Color.black));
-        curHeroHand.setPreferredSize(new Dimension(950,(currPanel.getHeight()/2)-20));
-        positioning(curHeroHand,curHeroField.getInsets(),230,curHeroField.getHeight()+20);
-        currPanel.add(curHeroHand);
-
-
-
-
-
-//
-
-
-
-
+// Filling Current player side
+        HeroPanel curHeroPanel = new HeroPanel(currPanel);
+        HeroDeck curHeroDeck = new HeroDeck(currPanel);
+        FieldViewPanel curHeroField = new FieldViewPanel(currPanel,currPanel.getInsets(),230,10,"Field",7);
+        FieldViewPanel curHeroHand = new FieldViewPanel(currPanel,curHeroField.getInsets(),230,curHeroField.getHeight()+20,"Hand",10);
+// Filling Opponent Side
+        HeroPanel oppoHeroPanel = new HeroPanel(oppoPanel);
+        HeroDeck oppoHeroDeck = new HeroDeck(oppoPanel);
+        FieldViewPanel oppoHeroHand = new FieldViewPanel(oppoPanel,oppoPanel.getInsets(),230,10,"Hand",10);
+        FieldViewPanel oppoHeroField = new FieldViewPanel(oppoPanel,curHeroHand.getInsets(),230,curHeroHand.getHeight()+20,"Field",7);
 
         pack();
         revalidate();
         repaint();
     }
 
-    public void positioning (Component c ,Insets insets, int x,int y) {
+
+
+    public static void positioning (Component c ,Insets insets, int x,int y) {
         Dimension size = c.getPreferredSize();
         c.setBounds(insets.left + x,insets.right+y,size.width,size.height);
     }
@@ -176,8 +133,5 @@ public class GameView extends JFrame {
             g.drawImage(image, 0, 0, 1440,810,this);
         }
     }
-
-
-
 
 }
