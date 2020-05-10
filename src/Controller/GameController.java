@@ -145,7 +145,7 @@ public class GameController implements GameListener, ActionListener {
         if (!b.getActionCommand().equals("Exit")) {
             p = switchOnHeros(b);
             if (c == 0) {
-                view.getHerosMenueLabel().setText("Second Player Hero");
+                view.getHerosMenueLabel().setText("Second Player Hero:");
                 p1 = p;
 
             } else if (c == 1) {

@@ -3,9 +3,7 @@ package view;
 
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,11 +17,11 @@ public class GameView extends JFrame {
     }
 
     private JPanel herosMenue;
-    private JLabel herosMenueLabel = new JLabel("First Player Hero");
+    private JLabel herosMenueLabel = new JLabel("First Player Hero:");
     private Insets insets;
     private Dimension size;
-    private JPanel curr;
-    private JPanel oppo;
+    private JPanel currPanel;
+    private JPanel oppoPanel;
     private JButton exit;
     public JLabel getHerosMenueLabel() {
         return herosMenueLabel;
@@ -61,18 +59,20 @@ public class GameView extends JFrame {
         add(herosMenue);
         herosMenue.setPreferredSize(new Dimension(400,getHeight()-100));
         size = herosMenue.getPreferredSize();
-        herosMenue.setBounds(520+insets.left,10+insets.right,size.width,size.height);
+        herosMenue.setBounds(520 + insets.left,10 + insets.right,size.width,size.height);
 
         //        Exit Button
         exit = new JButton("Exit");
 
         add(exit);
+
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
                 System.exit(0);
             }
         });
+
         size = exit.getPreferredSize();
         exit.setBounds(insets.left + 1350,insets.right + 710,size.width,size.height);
 
@@ -87,21 +87,37 @@ public class GameView extends JFrame {
 
         remove(herosMenue);
         remove(exit);
-        curr = new JPanel();
-        curr.setPreferredSize(new Dimension(1400,380));
-        size = curr.getPreferredSize();
-        curr.setBounds(insets.left + 10,insets.right+10,size.width,size.height);
-        curr.setBorder(BorderFactory.createLineBorder(Color.black));
-        oppo = new JPanel();
-        oppo.setPreferredSize(new Dimension(1400,380));
-        size = oppo.getPreferredSize();
-        oppo.setBounds(insets.left + 10,insets.right+10+curr.getHeight(),size.width,size.height);
-        oppo.setBorder(BorderFactory.createLineBorder(Color.black));
-        JPanel temp = curr;
-        curr = oppo;
-        oppo = temp;
-        add(curr);
-        add(oppo);
+        currPanel = new JPanel();
+        currPanel.setPreferredSize(new Dimension(1400,380));
+        size = currPanel.getPreferredSize();
+        currPanel.setBounds(insets.left + 10,insets.right+10,size.width,size.height);
+        currPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        oppoPanel = new JPanel();
+        oppoPanel.setPreferredSize(new Dimension(1400,380));
+        size = oppoPanel.getPreferredSize();
+        oppoPanel.setBounds(insets.left + 10,insets.right+10+ currPanel.getHeight(),size.width,size.height);
+        oppoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        JPanel temp = currPanel;
+        currPanel = oppoPanel;
+        oppoPanel = temp;
+        currPanel.setLayout(null);
+        oppoPanel.setLayout(null);
+        add(currPanel);
+        add(oppoPanel);
+
+//      styling current hero panel -> the one in the bottom
+        JPanel curHeroPanel = new JPanel();
+        curHeroPanel.setPreferredSize(new Dimension(200,300));
+        positioning(curHeroPanel, currPanel.getInsets(),(currPanel.getWidth()/2) - 100,currPanel.getHeight()-300);
+
+        JButton selectCurHero = new JButton("Select");
+        curHeroPanel.add(selectCurHero);
+        JTextArea curHeroInfo = new JTextArea();
+        curHeroInfo.setText("gskjgkshddghdg \n ;lfjklgjlslsgl");
+        curHeroInfo.setEditable(false);
+        curHeroPanel.add(curHeroInfo);
+        curHeroPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        currPanel.add(curHeroPanel);
 
 
 
@@ -109,6 +125,12 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
     }
+
+    public void positioning (Component c ,Insets insets, int x,int y) {
+        Dimension size = c.getPreferredSize();
+        c.setBounds(insets.left + x,insets.right+y,size.width,size.height);
+    }
+
     class ImagePanel extends JComponent {
         private Image image;
         public ImagePanel(Image image) {
@@ -121,9 +143,6 @@ public class GameView extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-
-    }
 
 
 
