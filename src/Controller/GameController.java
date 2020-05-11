@@ -36,9 +36,6 @@ public class GameController implements GameListener, ActionListener {
         view.repaint();
     }
 
-
-
-
     public void addingActionListener () {
         view.getOppoHeroPanel().getUseHeroPower().addActionListener(this);
         view.getCurHeroPanel().getUseHeroPower().addActionListener(this);
@@ -207,7 +204,6 @@ public class GameController implements GameListener, ActionListener {
                 updateHand(model.getCurrentHero(),view.getCurHeroHand());
                 updateHand(model.getOpponent(),view.getOppoHeroHand());
 
-
             }
             c++;
         }
@@ -236,7 +232,6 @@ public class GameController implements GameListener, ActionListener {
             buttons.add(m.getSelectButton());
         }
     }
-
 
     public void updateField(Hero hero, JPanel panel){
         ArrayList<Card> handModel = hero.getHand();
