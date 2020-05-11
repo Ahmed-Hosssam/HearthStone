@@ -142,6 +142,7 @@ public class GameView extends JFrame {
 
         size = exit.getPreferredSize();
         exit.setBounds(insets.left + 1350, insets.right + 710, size.width, size.height);
+        buttons = new ArrayList<>();
 
         pack();
         setVisible(true);

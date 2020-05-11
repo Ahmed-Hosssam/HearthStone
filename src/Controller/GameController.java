@@ -38,6 +38,7 @@ public class GameController implements GameListener, ActionListener {
 
 
 
+
     public void addingActionListener () {
         view.getOppoHeroPanel().getUseHeroPower().addActionListener(this);
         view.getCurHeroPanel().getUseHeroPower().addActionListener(this);
@@ -161,7 +162,8 @@ public class GameController implements GameListener, ActionListener {
                     ex.printStackTrace();
                 }
 //                view.intializeHeroPanel(model.getCurrentHero(),this);
-                new MinionPanel(view.getCurHeroField(),"field");
+
+
 
             }
 
@@ -209,12 +211,12 @@ public class GameController implements GameListener, ActionListener {
             }
             c++;
         }
+
+//        ......................
+
         view.pack();
         view.repaint();
         view.revalidate();
-//        ......................
-
-
     }
 
 
@@ -234,6 +236,27 @@ public class GameController implements GameListener, ActionListener {
             buttons.add(m.getSelectButton());
         }
     }
+
+
+    public void updateField(Hero hero, JPanel panel){
+        ArrayList<Card> handModel = hero.getHand();
+        ArrayList<JButton> buttons = view.getButtons();
+        for(Card c : handModel){
+            MinionPanel m = new MinionPanel(panel,"field");
+            m.getMinionInfo().setText(c.toString());
+            buttons.add(m.getSelectButton());
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
         new GameController();
