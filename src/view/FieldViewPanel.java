@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FieldViewPanel extends JPanel {
+
     public FieldViewPanel (JPanel panel,Insets insets,int x, int y,String label,int size){
         add(new JLabel(label));
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -11,6 +12,8 @@ public class FieldViewPanel extends JPanel {
         GameView.positioning(this,insets,x,y);
         panel.add(this);
         setLayout(new GridLayout(1,size));
+
+
     }
 
     public static void main(String[] args) {
