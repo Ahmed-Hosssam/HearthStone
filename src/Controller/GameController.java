@@ -212,6 +212,10 @@ public class GameController implements GameListener, ActionListener {
 
 //        ......................
 
+        public void updateHero () {
+
+        }
+
 
 
 
