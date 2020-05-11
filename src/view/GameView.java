@@ -41,50 +41,11 @@ public class GameView extends JFrame {
     private HeroPanel oppoHeroPanel;
 
 
-    public ArrayList<MinionPanel> getCurHandPanels() {
-        return curHandPanels;
-    }
-
-    public ArrayList<MinionPanel> getCurFieldPanels() {
-        return curFieldPanels;
-    }
-
-    public ArrayList<MinionPanel> getOppoFieldPanels() {
-        return oppoFieldPanels;
-    }
-
-    public ArrayList<MinionPanel> getOppoHandPanels() {
-        return oppoHandPanels;
-    }
 
     private ArrayList<JButton> buttons;
-    private ArrayList<MinionPanel> curHandPanels;
-    private ArrayList<MinionPanel> curFieldPanels;
-    private ArrayList<MinionPanel> oppoFieldPanels;
-    private ArrayList<MinionPanel> oppoHandPanels;
-    private ArrayList<Card> curHandCards;
-    private ArrayList<Card> curFieldCards;
-    private ArrayList<Card> oppoFieldCards;
-    private ArrayList<Card> oppoHandCards;
+    private ArrayList<Card> cards;
 
-    public ArrayList<Card> getCurHandCards() {
-        return curHandCards;
-    }
-    public ArrayList<JButton> getButtons(){
-        return buttons;
-    }
 
-    public ArrayList<Card> getCurFieldCards() {
-        return curFieldCards;
-    }
-
-    public ArrayList<Card> getOppoFieldCards() {
-        return oppoFieldCards;
-    }
-
-    public ArrayList<Card> getOppoHandCards() {
-        return oppoHandCards;
-    }
 
 
 
@@ -92,18 +53,17 @@ public class GameView extends JFrame {
         return herosMenueLabel;
     }
 
+    public ArrayList<JButton> getButtons() {
+        return buttons;
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
     public GameView() {
-        buttons = new ArrayList<>();
-        curHandCards = new ArrayList<>();
-        curFieldCards = new ArrayList<>();
-        oppoFieldCards = new ArrayList<>();
-        oppoHandCards = new ArrayList<>();
 
-        curHandPanels = new ArrayList<>();
-        curFieldPanels = new ArrayList<>();
-        oppoFieldPanels = new ArrayList<>();
-        oppoHandPanels = new ArrayList<>();
-
+        cards = new ArrayList<>();
         setSize(new Dimension(1440, 810));
         try {
             setContentPane(new ImagePanel(ImageIO.read(new File("images/backgrounds/main.jpg"))));

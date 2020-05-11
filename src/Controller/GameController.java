@@ -4,6 +4,7 @@ import engine.Game;
 import engine.GameListener;
 import exceptions.*;
 import model.cards.Card;
+import model.cards.minions.Minion;
 import model.heroes.*;
 import view.GameView;
 import view.HeroDeck;
@@ -31,11 +32,13 @@ public class GameController implements GameListener, ActionListener {
     static int c = 0;
     public GameController () {
         view = new GameView();
+
+//        adding heros to Jpanel
         generateHeros();
+
         view.revalidate();
         view.repaint();
     }
-
 
 
 
@@ -43,6 +46,7 @@ public class GameController implements GameListener, ActionListener {
         view.getOppoHeroPanel().getUseHeroPower().addActionListener(this);
         view.getCurHeroPanel().getUseHeroPower().addActionListener(this);
         view.getEndTurn().addActionListener(this);
+
     }
 
     public void generateHeros () {
@@ -161,7 +165,8 @@ public class GameController implements GameListener, ActionListener {
                 } catch (CloneNotSupportedException ex) {
                     ex.printStackTrace();
                 }
-//                view.intializeHeroPanel(model.getCurrentHero(),this);
+                updateAll ();
+
 
 
 
@@ -183,7 +188,19 @@ public class GameController implements GameListener, ActionListener {
             }
 
             if (b.getActionCommand().equals("add to field")) {
-
+                int idx = view.getButtons().indexOf(b);
+                Card m = view.getCards().get(idx);
+                try {
+                    model.getCurrentHero().playMinion((Minion) m);
+                } catch (NotYourTurnException ex) {
+                    ex.printStackTrace();
+                } catch (NotEnoughManaException ex) {
+                    ex.printStackTrace();
+                } catch (FullFieldException ex) {
+                    ex.printStackTrace();
+                }
+                updateField(model.getCurrentHero(),view.getCurHeroField());
+                updateHand(model.getCurrentHero(),view.getCurHeroHand());
             }
 
 //            choosing from heros
@@ -203,9 +220,9 @@ public class GameController implements GameListener, ActionListener {
                 }
                 view.createGamePlay(model.getCurrentHero().getName(),model.getOpponent().getName());
                 addingActionListener();
-//                view.intializeFirstTurn(model.getCurrentHero(),model.getOpponent(),this);
-                updateHand(model.getCurrentHero(),view.getCurHeroHand());
-                updateHand(model.getOpponent(),view.getOppoHeroHand());
+                updateAll ();
+
+//
 
 
             }
@@ -220,6 +237,18 @@ public class GameController implements GameListener, ActionListener {
     }
 
 
+    public void updateAll () {
+        updateHeroPanel(view.getCurHeroPanel(),model.getCurrentHero());
+        updateHeroPanel(view.getOppoHeroPanel(),model.getOpponent());
+        updateHand(model.getCurrentHero(),view.getCurHeroHand());
+        updateHand(model.getOpponent(),view.getOppoHeroHand());
+        updateDeckPanel(view.getCurHeroDeck(),model.getCurrentHero());
+        updateDeckPanel(view.getOppoHeroDeck(),model.getOpponent());
+        updateField(model.getCurrentHero(),view.getCurHeroField());
+        updateField(model.getOpponent(),view.getOppoHeroField());
+    }
+
+
     public void updateHeroPanel (HeroPanel panel, Hero cur) {
         panel.getHeroInfo().setText("Name: " + cur.getName() + "\n" + "Current HP: " + cur.getCurrentHP() + "\n" + "Total mana crystals: " + cur.getTotalManaCrystals() + "\n" + "Current mana crystals: " + cur.getCurrentManaCrystals());
     }
@@ -227,26 +256,36 @@ public class GameController implements GameListener, ActionListener {
     public void updateDeckPanel (HeroDeck panel, Hero cur) {
         panel.getCurHeroDeckInfo().setText("Cards left in your deck:" + "\n" + cur.getDeck().size());
     }
+
+
+    public void updateField(Hero hero, JPanel panel) {
+        panel.removeAll();
+        ArrayList<Minion> handModel = hero.getField();
+        ArrayList<JButton> buttons = view.getButtons();
+        ArrayList<Card> cards = view.getCards();
+
+        for(Card c : handModel){
+            MinionPanel m = new MinionPanel(panel,"field",this);
+            m.getMinionInfo().setText(c.toString());
+            buttons.add(m.getSelectButton());
+            cards.add(c);
+        }
+    }
+
     public void updateHand(Hero hero,JPanel panel){
+        panel.removeAll();
         ArrayList<Card> handModel = hero.getHand();
         ArrayList<JButton>buttons = view.getButtons();
+        ArrayList<Card> cards = view.getCards();
         for(Card c : handModel){
-            MinionPanel m = new MinionPanel(panel,"hand");
+            MinionPanel m = new MinionPanel(panel,"hand",this);
             m.getMinionInfo().setText(c.toString());
             buttons.add(m.getSelectButton());
+            cards.add(c);
         }
     }
 
 
-    public void updateField(Hero hero, JPanel panel){
-        ArrayList<Card> handModel = hero.getHand();
-        ArrayList<JButton> buttons = view.getButtons();
-        for(Card c : handModel){
-            MinionPanel m = new MinionPanel(panel,"field");
-            m.getMinionInfo().setText(c.toString());
-            buttons.add(m.getSelectButton());
-        }
-    }
 
 
 
