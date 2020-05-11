@@ -162,18 +162,12 @@ public class GameController implements GameListener, ActionListener {
                 } catch (CloneNotSupportedException ex) {
                     ex.printStackTrace();
                 }
-                view.intializeHeroPanel(model.getCurrentHero(),this);
+//                view.intializeHeroPanel(model.getCurrentHero(),this);
 
             }
 
             if (b.getActionCommand().equals("select card")){
-                if (view.getCurFieldButtons().contains(b)) {
-                    int idx = view.getCurFieldButtons().indexOf(b);
-//                    selected = view.getCurFieldCards()
-                }
-                else {
 
-                }
             }
 
             if (b.getActionCommand().equals("Attack")){
@@ -184,59 +178,11 @@ public class GameController implements GameListener, ActionListener {
             }
 
             if (b.getActionCommand().equals("Use Hero Power")){
-                try {
-                    model.getCurrentHero().useHeroPower();
-                } catch (NotEnoughManaException ex) {
-                    ex.printStackTrace();
-                } catch (HeroPowerAlreadyUsedException ex) {
-                    ex.printStackTrace();
-                } catch (NotYourTurnException ex) {
-                    ex.printStackTrace();
-                } catch (FullHandException ex) {
-                    ex.printStackTrace();
-                } catch (FullFieldException ex) {
-                    ex.printStackTrace();
-                } catch (CloneNotSupportedException ex) {
-                    ex.printStackTrace();
-                }
-               // view.intializeFirstTurn(model.getCurrentHero(),model.getOpponent(),this);
 
             }
 
             if (b.getActionCommand().equals("add to field")) {
-                JButton attack = new JButton("Attack");
-                if (view.getCurHandButtons().contains(b)){
-                    int idx = view.getCurHandButtons().indexOf(b);
-                    try {
-                        model.getCurrentHero().validate(view.getCurHandCards().get(idx));
-                    } catch (NotYourTurnException ex) {
-                        ex.printStackTrace();
-                    } catch (NotEnoughManaException ex) {
-                        ex.printStackTrace();
-                    }
-                    MinionPanel m = view.getCurHandPanels().get(idx);
-                    view.getCurHeroHand().remove(m);
-                    view.getCurHeroField().add(m);
-                    m.setAttackButton(attack,this);
-                }
-                else {
-                    int idx = view.getOppoHandButtons().indexOf(b);
-                    try {
-                        model.getCurrentHero().validate(view.getOppoHandCards().get(idx));
-                    } catch (NotYourTurnException ex) {
-                        ex.printStackTrace();
-                    } catch (NotEnoughManaException ex) {
-                        ex.printStackTrace();
-                    }
-                    MinionPanel m = view.getOppoHandPanels().get(idx);
-                    view.getOppoHeroHand().remove(m);
-                    view.getOppoHeroField().add(m);
-                    m.setAttackButton(attack,this);
-                }
-                b.setText("select card");
-                view.pack();
-                view.revalidate();
-                view.repaint();
+
             }
 
 //            choosing from heros
@@ -256,7 +202,7 @@ public class GameController implements GameListener, ActionListener {
                 }
                 view.createGamePlay(model.getCurrentHero().getName(),model.getOpponent().getName());
                 addingActionListener();
-                view.intializeFirstTurn(model.getCurrentHero(),model.getOpponent(),this);
+//                view.intializeFirstTurn(model.getCurrentHero(),model.getOpponent(),this);
 //                view.intializeHand(this);
 
 
@@ -268,7 +214,12 @@ public class GameController implements GameListener, ActionListener {
 
 
 
+
     }
+
+
+
+
 
     public static void main(String[] args) {
         new GameController();
