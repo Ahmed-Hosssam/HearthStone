@@ -35,13 +35,14 @@ public class GameController implements GameListener, ActionListener {
         view.revalidate();
         view.repaint();
     }
-    public void updateCurHand(){
+    public void updateHand(Hero hero,JPanel panel){
         ArrayList<Card> handModel = model.getCurrentHero().getHand();
-        ArrayList<MinionPanel> handView = new ArrayList<>();
-        ArrayList<JButton> buttons = new ArrayList<>();
+        ArrayList<JButton>buttons = view.getButtons();
         for(Card c : handModel){
-            MinionPanel m = new MinionPanel(view.getCurHeroPanel());
-
+            MinionPanel m = new MinionPanel(panel,"hand");
+            m.getMinionInfo().setText(c.toString());
+            panel.add(m);
+            buttons.add(m.getSelectButton());
         }
     }
 
@@ -212,20 +213,11 @@ public class GameController implements GameListener, ActionListener {
 //                view.intializeFirstTurn(model.getCurrentHero(),model.getOpponent(),this);
 //                view.intializeHand(this);
 
-
             }
             c++;
         }
 
 //        ......................
-
-        public void updateHero () {
-
-        }
-
-
-
-
     }
 
 

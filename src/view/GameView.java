@@ -40,21 +40,6 @@ public class GameView extends JFrame {
     private HeroDeck oppoHeroDeck;
     private HeroPanel oppoHeroPanel;
 
-    public ArrayList<JButton> getCurHandButtons() {
-        return curHandButtons;
-    }
-
-    public ArrayList<JButton> getCurFieldButtons() {
-        return curFieldButtons;
-    }
-
-    public ArrayList<JButton> getOppoFieldButtons() {
-        return oppoFieldButtons;
-    }
-
-    public ArrayList<JButton> getOppoHandButtons() {
-        return oppoHandButtons;
-    }
 
     public ArrayList<MinionPanel> getCurHandPanels() {
         return curHandPanels;
@@ -72,10 +57,7 @@ public class GameView extends JFrame {
         return oppoHandPanels;
     }
 
-    private ArrayList<JButton> curHandButtons;
-    private ArrayList<JButton> curFieldButtons;
-    private ArrayList<JButton> oppoFieldButtons;
-    private ArrayList<JButton> oppoHandButtons;
+    private ArrayList<JButton> buttons;
     private ArrayList<MinionPanel> curHandPanels;
     private ArrayList<MinionPanel> curFieldPanels;
     private ArrayList<MinionPanel> oppoFieldPanels;
@@ -87,6 +69,9 @@ public class GameView extends JFrame {
 
     public ArrayList<Card> getCurHandCards() {
         return curHandCards;
+    }
+    public ArrayList<JButton> getButtons(){
+        return buttons;
     }
 
     public ArrayList<Card> getCurFieldCards() {
@@ -112,10 +97,7 @@ public class GameView extends JFrame {
         curFieldCards = new ArrayList<>();
         oppoFieldCards = new ArrayList<>();
         oppoHandCards = new ArrayList<>();
-        curHandButtons = new ArrayList<>();
-        curFieldButtons = new ArrayList<>();
-        oppoFieldButtons = new ArrayList<>();
-        oppoHandButtons = new ArrayList<>();
+
         curHandPanels = new ArrayList<>();
         curFieldPanels = new ArrayList<>();
         oppoFieldPanels = new ArrayList<>();

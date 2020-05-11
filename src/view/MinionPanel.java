@@ -32,7 +32,7 @@ public class MinionPanel extends JPanel {
         return selectButton;
     }
 
-    public MinionPanel(JPanel panel){
+    public MinionPanel(JPanel panel,String s){
 
         setLayout(new BorderLayout());
         MinionName = new JLabel();

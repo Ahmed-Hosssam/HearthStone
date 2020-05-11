@@ -25,6 +25,9 @@ public class Minion extends Card implements Cloneable {
         this.sleeping = !charge;
         this.attacked = false;
     }
+    public String  toString (){
+        return String.format("Minion%nName : %s%nMana Cost : %s%nRarity : %s%nAttack : %s%nHP : %s//%s%nTaunt : %s%nDivine Shield : %s%nSleeping : %s",getName(),getManaCost(),getRarity(),attack,currentHP,maxHP,taunt?"YES":"NO",divine?"YES":"NO",sleeping?"YES":"NO");
+    }
 
 
     public int getAttack() {
