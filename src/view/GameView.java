@@ -222,7 +222,7 @@ public class GameView extends JFrame {
 
         for (int i = 0; i < cur.getHand().size(); i++) {
             Card m = cur.getHand().get(i);
-            MinionPanel mm = new MinionPanel(heroHand);
+            MinionPanel mm = new MinionPanel(heroHand,"hand");
             mm.getSelectButton().addActionListener(listener);
 
             handButtons.add(mm.getSelectButton());

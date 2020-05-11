@@ -14,11 +14,6 @@ public class MinionPanel extends JPanel {
     private JButton selectButton;
     private JButton attackButton;
 
-    public void setAttackButton(JButton attackButton, GameController listener) {
-        this.attackButton = attackButton;
-        add(attackButton,BorderLayout.NORTH);
-        attackButton.addActionListener(listener);
-    }
 
     public JTextArea getMinionInfo() {
         return MinionInfo;
@@ -37,16 +32,24 @@ public class MinionPanel extends JPanel {
         setLayout(new BorderLayout());
         MinionName = new JLabel();
         selectButton = new JButton("add to field");
-        //add(MinionName,BorderLayout.NORTH);
+        add(MinionName,BorderLayout.NORTH);
         MinionInfo = new JTextArea();
         MinionInfo.setText("");
         MinionInfo.setEditable(false);
         MinionInfo.setPreferredSize(new Dimension(180,200));
         add(MinionInfo,BorderLayout.CENTER);
         setBorder(BorderFactory.createLineBorder(Color.black));
+
+        attackButton = new JButton("Attack");
+        if (s.equals("field")) {
+            selectButton.setText("select card");
+            add(attackButton,BorderLayout.NORTH);
+        }
         add(selectButton,BorderLayout.SOUTH);
+
         panel.add(this);
 
     }
+
 
 }

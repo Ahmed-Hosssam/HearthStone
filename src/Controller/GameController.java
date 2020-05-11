@@ -6,6 +6,8 @@ import exceptions.*;
 import model.cards.Card;
 import model.heroes.*;
 import view.GameView;
+import view.HeroDeck;
+import view.HeroPanel;
 import view.MinionPanel;
 
 import javax.sound.sampled.*;
@@ -24,6 +26,7 @@ public class GameController implements GameListener, ActionListener {
     private Hero p1;
     private Hero p2;
     private ArrayList<JButton> herosButtons;
+
     private Card selected;
     static int c = 0;
     public GameController () {
@@ -171,6 +174,7 @@ public class GameController implements GameListener, ActionListener {
                     ex.printStackTrace();
                 }
 //                view.intializeHeroPanel(model.getCurrentHero(),this);
+                new MinionPanel(view.getCurHeroField(),"field");
 
             }
 
@@ -211,13 +215,34 @@ public class GameController implements GameListener, ActionListener {
                 view.createGamePlay(model.getCurrentHero().getName(),model.getOpponent().getName());
                 addingActionListener();
 //                view.intializeFirstTurn(model.getCurrentHero(),model.getOpponent(),this);
-//                view.intializeHand(this);
+
 
             }
             c++;
         }
 
 //        ......................
+
+
+    }
+
+
+    public void updateHeroPanel (HeroPanel panel, Hero cur) {
+        panel.getHeroInfo().setText("Name: " + cur.getName() + "\n" + "Current HP: " + cur.getCurrentHP() + "\n" + "Total mana crystals: " + cur.getTotalManaCrystals() + "\n" + "Current mana crystals: " + cur.getCurrentManaCrystals());
+    }
+
+    public void updateDeckPanel (HeroDeck panel, Hero cur) {
+        panel.getCurHeroDeckInfo().setText("Cards left in your deck:" + "\n" + cur.getDeck().size());
+    }
+
+
+
+
+
+
+
+
+
     }
 
 
