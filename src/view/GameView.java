@@ -255,7 +255,6 @@ public class GameView extends JFrame {
                 mm.getMinionInfo().setText("Name: " + m.getName() + "\n" + "Mana cost: " + m.getManaCost() + "\n" + "Rarity: " + m.getRarity() + "\n" + "Attack: " + ((Minion) m).getAttack() + "\n" + "Current HP: " + ((Minion) m).getCurrentHP() + "\n" + "Taunt: " + taunt + "\n" + "Divine Shield: " + divineShield + "\n" + "Charge: " + charge);
             } else
                 mm.getMinionInfo().setText("Name: " + m.getName() + "\n" + "Mana cost: " + m.getManaCost() + "\n" + "Rarity: " + m.getRarity());
-
         }
 
         pack();

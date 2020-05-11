@@ -32,10 +32,19 @@ public class GameController implements GameListener, ActionListener {
 //        adding heros to Jpanel
         generateHeros();
 
-
         view.revalidate();
         view.repaint();
     }
+    public void updateCurHand(){
+        ArrayList<Card> handModel = model.getCurrentHero().getHand();
+        ArrayList<MinionPanel> handView = new ArrayList<>();
+        ArrayList<JButton> buttons = new ArrayList<>();
+        for(Card c : handModel){
+            MinionPanel m = new MinionPanel(view.getCurHeroPanel());
+
+        }
+    }
+
 
     public void addingActionListener () {
         view.getOppoHeroPanel().getUseHeroPower().addActionListener(this);
@@ -56,9 +65,7 @@ public class GameController implements GameListener, ActionListener {
             b.addActionListener(this);
             view.getHerosMenue().add(b);
         }
-
     }
-
      static void playSound(String soundFile) {
          AudioInputStream audioInputStream = null;
          try {

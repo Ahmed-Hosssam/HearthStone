@@ -26,6 +26,7 @@ public class Minion extends Card implements Cloneable {
         this.attacked = false;
     }
 
+
     public int getAttack() {
         return attack;
     }
