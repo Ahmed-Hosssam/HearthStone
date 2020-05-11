@@ -39,12 +39,11 @@ public class GameController implements GameListener, ActionListener {
         view.repaint();
     }
     public void updateHand(Hero hero,JPanel panel){
-        ArrayList<Card> handModel = model.getCurrentHero().getHand();
+        ArrayList<Card> handModel = hero.getHand();
         ArrayList<JButton>buttons = view.getButtons();
         for(Card c : handModel){
             MinionPanel m = new MinionPanel(panel,"hand");
             m.getMinionInfo().setText(c.toString());
-            panel.add(m);
             buttons.add(m.getSelectButton());
         }
     }
@@ -174,7 +173,8 @@ public class GameController implements GameListener, ActionListener {
                     ex.printStackTrace();
                 }
 //                view.intializeHeroPanel(model.getCurrentHero(),this);
-                new MinionPanel(view.getCurHeroField(),"field");
+
+
 
             }
 
@@ -214,7 +214,9 @@ public class GameController implements GameListener, ActionListener {
                 }
                 view.createGamePlay(model.getCurrentHero().getName(),model.getOpponent().getName());
                 addingActionListener();
-//                view.intializeFirstTurn(model.getCurrentHero(),model.getOpponent(),this);
+                updateHand(model.getCurrentHero(),view.getCurHeroHand());
+                updateHand(model.getOpponent(),view.getOppoHeroHand());
+//
 
 
             }
@@ -223,7 +225,9 @@ public class GameController implements GameListener, ActionListener {
 
 //        ......................
 
-
+        view.pack();
+        view.repaint();
+        view.revalidate();
     }
 
 
@@ -236,14 +240,21 @@ public class GameController implements GameListener, ActionListener {
     }
 
 
-
-
-
-
-
-
-
+    public void updateField(Hero hero, JPanel panel){
+        ArrayList<Card> handModel = hero.getHand();
+        ArrayList<JButton> buttons = view.getButtons();
+        for(Card c : handModel){
+            MinionPanel m = new MinionPanel(panel,"field");
+            m.getMinionInfo().setText(c.toString());
+            buttons.add(m.getSelectButton());
+        }
     }
+
+
+
+
+
+
 
 
 

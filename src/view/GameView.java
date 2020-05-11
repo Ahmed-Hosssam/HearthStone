@@ -141,6 +141,7 @@ public class GameView extends JFrame {
 
         size = exit.getPreferredSize();
         exit.setBounds(insets.left + 1350, insets.right + 710, size.width, size.height);
+        buttons = new ArrayList<>();
 
         pack();
         setVisible(true);
@@ -201,54 +202,54 @@ public class GameView extends JFrame {
         repaint();
     }
 
-    public void intializeHeroPanel(Hero cur, GameController listener) {
-        HeroPanel heroPanel = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? getCurHeroPanel() : getOppoHeroPanel();
-        FieldViewPanel heroHand = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? getCurHeroHand() : getOppoHeroHand();
-        HeroDeck heroDeck = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? getCurHeroDeck() : getOppoHeroDeck();
-        ArrayList<JButton> handButtons = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? curHandButtons:oppoHandButtons;
-        ArrayList<MinionPanel> handPanels = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? curHandPanels : oppoHandPanels;
-        ArrayList<Card> handCards = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? curHandCards:oppoHandCards;
+//    public void intializeHeroPanel(Hero cur, GameController listener) {
+//        HeroPanel heroPanel = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? getCurHeroPanel() : getOppoHeroPanel();
+//        FieldViewPanel heroHand = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? getCurHeroHand() : getOppoHeroHand();
+//        HeroDeck heroDeck = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? getCurHeroDeck() : getOppoHeroDeck();
+//        ArrayList<JButton> handButtons = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? curHandButtons:oppoHandButtons;
+//        ArrayList<MinionPanel> handPanels = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? curHandPanels : oppoHandPanels;
+//        ArrayList<Card> handCards = cur.getName().equals(getCurHeroPanel().getHeroName().getText()) ? curHandCards:oppoHandCards;
+//
+//        heroPanel.getHeroInfo().setText("Name: " + cur.getName() + "\n" + "Current HP: " + cur.getCurrentHP() + "\n" + "Total mana crystals: " + cur.getTotalManaCrystals() + "\n" + "Current mana crystals: " + cur.getCurrentManaCrystals());
+//        heroDeck.getCurHeroDeckInfo().setText("Cards left in your deck:\n" + cur.getDeck().size());
+//        handButtons.removeAll(Collections.EMPTY_LIST);
+//        handPanels.removeAll(Collections.EMPTY_LIST);
+//        handCards.removeAll(Collections.EMPTY_LIST);
+//
+//        heroHand.removeAll();
+//        pack();
+//        revalidate();
+//        repaint();
+//
+//        for (int i = 0; i < cur.getHand().size(); i++) {
+//            Card m = cur.getHand().get(i);
+//            MinionPanel mm = new MinionPanel(heroHand,"hand");
+//            mm.getSelectButton().addActionListener(listener);
+//
+//            handButtons.add(mm.getSelectButton());
+//            handPanels.add(mm);
+//            handCards.add(m);
+//
+//            mm.getMinionName().setText(m.getName());
+//            if (m instanceof Minion) {
+//                String taunt = ((Minion) m).isTaunt() ? "Yes" : "No";
+//                String divineShield = ((Minion) m).isDivine() ? "Yes" : "No";
+//                String charge = ((Minion) m).isSleeping() ? "No" : "Yes";
+//                mm.getMinionInfo().setText("Name: " + m.getName() + "\n" + "Mana cost: " + m.getManaCost() + "\n" + "Rarity: " + m.getRarity() + "\n" + "Attack: " + ((Minion) m).getAttack() + "\n" + "Current HP: " + ((Minion) m).getCurrentHP() + "\n" + "Taunt: " + taunt + "\n" + "Divine Shield: " + divineShield + "\n" + "Charge: " + charge);
+//            } else
+//                mm.getMinionInfo().setText("Name: " + m.getName() + "\n" + "Mana cost: " + m.getManaCost() + "\n" + "Rarity: " + m.getRarity());
+//        }
+//
+//        pack();
+//        revalidate();
+//        repaint();
+//    }
 
-        heroPanel.getHeroInfo().setText("Name: " + cur.getName() + "\n" + "Current HP: " + cur.getCurrentHP() + "\n" + "Total mana crystals: " + cur.getTotalManaCrystals() + "\n" + "Current mana crystals: " + cur.getCurrentManaCrystals());
-        heroDeck.getCurHeroDeckInfo().setText("Cards left in your deck:\n" + cur.getDeck().size());
-        handButtons.removeAll(Collections.EMPTY_LIST);
-        handPanels.removeAll(Collections.EMPTY_LIST);
-        handCards.removeAll(Collections.EMPTY_LIST);
-
-        heroHand.removeAll();
-        pack();
-        revalidate();
-        repaint();
-
-        for (int i = 0; i < cur.getHand().size(); i++) {
-            Card m = cur.getHand().get(i);
-            MinionPanel mm = new MinionPanel(heroHand,"hand");
-            mm.getSelectButton().addActionListener(listener);
-
-            handButtons.add(mm.getSelectButton());
-            handPanels.add(mm);
-            handCards.add(m);
-
-            mm.getMinionName().setText(m.getName());
-            if (m instanceof Minion) {
-                String taunt = ((Minion) m).isTaunt() ? "Yes" : "No";
-                String divineShield = ((Minion) m).isDivine() ? "Yes" : "No";
-                String charge = ((Minion) m).isSleeping() ? "No" : "Yes";
-                mm.getMinionInfo().setText("Name: " + m.getName() + "\n" + "Mana cost: " + m.getManaCost() + "\n" + "Rarity: " + m.getRarity() + "\n" + "Attack: " + ((Minion) m).getAttack() + "\n" + "Current HP: " + ((Minion) m).getCurrentHP() + "\n" + "Taunt: " + taunt + "\n" + "Divine Shield: " + divineShield + "\n" + "Charge: " + charge);
-            } else
-                mm.getMinionInfo().setText("Name: " + m.getName() + "\n" + "Mana cost: " + m.getManaCost() + "\n" + "Rarity: " + m.getRarity());
-        }
-
-        pack();
-        revalidate();
-        repaint();
-    }
-
-    public void intializeFirstTurn(Hero cur, Hero opponent, GameController listener) {
-        intializeHeroPanel(cur, listener);
-        intializeHeroPanel(opponent, listener);
-
-    }
+//    public void intializeFirstTurn(Hero cur, Hero opponent, GameController listener) {
+//        intializeHeroPanel(cur, listener);
+//        intializeHeroPanel(opponent, listener);
+//
+//    }
 
 
     public JPanel getCurrPanel() {
