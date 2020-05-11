@@ -26,10 +26,8 @@ public class GameController implements GameListener, ActionListener {
     static int c = 0;
     public GameController () {
         view = new GameView();
-
 //        adding heros to Jpanel
         generateHeros();
-
         view.revalidate();
         view.repaint();
     }
