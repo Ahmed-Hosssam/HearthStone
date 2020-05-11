@@ -31,30 +31,17 @@ public class GameController implements GameListener, ActionListener {
     static int c = 0;
     public GameController () {
         view = new GameView();
-
-//        adding heros to Jpanel
         generateHeros();
-
         view.revalidate();
         view.repaint();
     }
-    public void updateHand(Hero hero,JPanel panel){
-        ArrayList<Card> handModel = model.getCurrentHero().getHand();
-        ArrayList<JButton>buttons = view.getButtons();
-        for(Card c : handModel){
-            MinionPanel m = new MinionPanel(panel,"hand");
-            m.getMinionInfo().setText(c.toString());
-            panel.add(m);
-            buttons.add(m.getSelectButton());
-        }
-    }
+
 
 
     public void addingActionListener () {
         view.getOppoHeroPanel().getUseHeroPower().addActionListener(this);
         view.getCurHeroPanel().getUseHeroPower().addActionListener(this);
         view.getEndTurn().addActionListener(this);
-
     }
 
     public void generateHeros () {
@@ -215,12 +202,16 @@ public class GameController implements GameListener, ActionListener {
                 view.createGamePlay(model.getCurrentHero().getName(),model.getOpponent().getName());
                 addingActionListener();
 //                view.intializeFirstTurn(model.getCurrentHero(),model.getOpponent(),this);
+                updateHand(model.getCurrentHero(),view.getCurHeroHand());
+                updateHand(model.getOpponent(),view.getOppoHeroHand());
 
 
             }
             c++;
         }
-
+        view.pack();
+        view.repaint();
+        view.revalidate();
 //        ......................
 
 
@@ -234,20 +225,15 @@ public class GameController implements GameListener, ActionListener {
     public void updateDeckPanel (HeroDeck panel, Hero cur) {
         panel.getCurHeroDeckInfo().setText("Cards left in your deck:" + "\n" + cur.getDeck().size());
     }
-
-
-
-
-
-
-
-
-
+    public void updateHand(Hero hero,JPanel panel){
+        ArrayList<Card> handModel = hero.getHand();
+        ArrayList<JButton>buttons = view.getButtons();
+        for(Card c : handModel){
+            MinionPanel m = new MinionPanel(panel,"hand");
+            m.getMinionInfo().setText(c.toString());
+            buttons.add(m.getSelectButton());
+        }
     }
-
-
-
-
 
     public static void main(String[] args) {
         new GameController();
