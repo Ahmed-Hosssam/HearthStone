@@ -157,6 +157,7 @@ public class GameView extends JFrame {
         currPanel.setLayout(new BorderLayout());
         oppoPanel.setLayout(new BorderLayout());
 
+
 //
         curHeroPanel.getHeroName().setText(n1);
         oppoHeroPanel.getHeroName().setText(n2);

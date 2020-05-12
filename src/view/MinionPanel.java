@@ -15,7 +15,7 @@ public class MinionPanel extends JPanel {
     private JLabel MinionName;
     private JButton selectButton;
     private JButton attackButton;
-
+    private String cardType;
 
     public JTextArea getMinionInfo() {
         return MinionInfo;
@@ -29,11 +29,20 @@ public class MinionPanel extends JPanel {
         return selectButton;
     }
 
-    public MinionPanel(JPanel panel,String s,GameController listener,boolean f){
+    public JButton getAttackButton() {
+        return attackButton;
+    }
 
+    public String getCardType() {
+        return cardType;
+    }
+
+    public MinionPanel(JPanel panel, String s, String cardType, GameController listener, boolean f){
+        this.cardType = cardType;
         setLayout(new BorderLayout());
         MinionName = new JLabel();
         selectButton = new JButton("add to field");
+
         add(MinionName,BorderLayout.NORTH);
         MinionInfo = new JTextArea();
         MinionInfo.setText("");
@@ -51,6 +60,9 @@ public class MinionPanel extends JPanel {
 
             }
             attackButton.addActionListener(listener);
+        }
+        if (cardType.equals("spell")) {
+            selectButton.setText("cast");
         }
         add(selectButton,BorderLayout.SOUTH);
 
