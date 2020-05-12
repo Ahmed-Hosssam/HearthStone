@@ -164,8 +164,9 @@ public class GameController implements GameListener, ActionListener {
         GameOver.setResizable(false);
         GameOver.setMinimumSize(new Dimension(GameOver.getWidth(), GameOver.getHeight()));
         GameOver.setMinimumSize(new Dimension(GameOver.getWidth(), GameOver.getHeight()));
-        GameOver.add(new JLabel("Game Over, " + winner + " wins!!"));
+        GameOver.add(new JLabel("Game Over, " + winner + " wins!!"),BorderLayout.CENTER);
         GameOver.pack();
+        view.dispose();
         GameOver.setVisible(true);
         GameOver.revalidate();
         GameOver.repaint();
@@ -178,6 +179,7 @@ public class GameController implements GameListener, ActionListener {
         Hero p = null;
         if (!b.getActionCommand().equals("Exit")) {
 
+
             if (b.getActionCommand().equals("End Turn")) {
 
                 useHeroPower = false;
@@ -189,8 +191,6 @@ public class GameController implements GameListener, ActionListener {
                     ex.printStackTrace();
                 }
 
-                if (model.getCurrentHero().getCurrentHP() == 0)
-                    model.onHeroDeath();
 
 
             }
@@ -200,6 +200,7 @@ public class GameController implements GameListener, ActionListener {
             if (b.getActionCommand().equals("select")){
                 int idx = buttons.indexOf(b);
                 selected = cards.get(idx);
+
                 if (useHeroPower) {
                     if (model.getCurrentHero() instanceof Mage){
                         if (selected instanceof Minion) {
@@ -276,6 +277,8 @@ public class GameController implements GameListener, ActionListener {
                         }
                     }
                     useHeroPower = false;
+                    view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+
                 }
                 else if (castSpell != null){
                     try {
@@ -297,6 +300,8 @@ public class GameController implements GameListener, ActionListener {
                 castSpell = null;
 
             }
+
+
 
             if (b.getActionCommand().equals("Attack")){
                 int idx = buttons.indexOf(b);
@@ -326,9 +331,15 @@ public class GameController implements GameListener, ActionListener {
             if (b.getActionCommand().equals("Use Hero Power")){
                 int idx = buttons.indexOf(b);
                 Object attacked = cards.get(idx);
-
-                if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest)
+                if (useHeroPower)
+                {
+                        view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                        useHeroPower = false;
+                }
+                else if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest) {
+                    b.setBackground(Color.GREEN);
                     useHeroPower = true;
+                }
                 else {
                     try {
                         model.getCurrentHero().useHeroPower();
@@ -401,6 +412,7 @@ public class GameController implements GameListener, ActionListener {
                 } catch (CloneNotSupportedException ex) {
                     ex.printStackTrace();
                 }
+                model.setListener(this);
                 view.createGamePlay(model.getCurrentHero().getName(),model.getOpponent().getName());
                 addingActionListener();
                 updateAll ();
