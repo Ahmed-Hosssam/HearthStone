@@ -31,7 +31,7 @@ public class GameController implements GameListener, ActionListener {
     private Object selected;
     public static ArrayList<JButton> buttons = new ArrayList<>();
     public static ArrayList<Object> cards = new ArrayList<>();
-    static int c = 0;
+    static int c = 0,turnCounter;
     private boolean useHeroPower = false;
 
     public GameController () {
@@ -43,9 +43,6 @@ public class GameController implements GameListener, ActionListener {
         view.revalidate();
         view.repaint();
     }
-
-
-
     public void addingActionListener () {
         view.getOppoHeroPanel().getUseHeroPower().addActionListener(this);
         view.getCurHeroPanel().getUseHeroPower().addActionListener(this);
@@ -90,8 +87,6 @@ public class GameController implements GameListener, ActionListener {
          }
          clip.start();
     }
-
-
     public Hero switchOnHeros (JButton b) {
         Hero p = null;
         switch (b.getActionCommand()) {
@@ -147,13 +142,10 @@ public class GameController implements GameListener, ActionListener {
         return p;
     }
 
-
-
     @Override
     public void onGameOver() {
 
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton b = (JButton) e.getSource();
@@ -165,20 +157,13 @@ public class GameController implements GameListener, ActionListener {
                 useHeroPower = false;
                 try {
                     model.endTurn();
+                    turnCounter++;
                 } catch (FullHandException ex) {
                     ex.printStackTrace();
                 } catch (CloneNotSupportedException ex) {
                     ex.printStackTrace();
                 }
-
-
-
-
-
             }
-
-
-
             if (b.getActionCommand().equals("select")){
                 int idx = buttons.indexOf(b);
                 selected = cards.get(idx);
@@ -310,12 +295,7 @@ public class GameController implements GameListener, ActionListener {
                         ex.printStackTrace();
                     }
                 }
-
-
-
-
             }
-
             if (b.getActionCommand().equals("add to field")) {
                 int idx = buttons.indexOf(b);
                 Card m = (Card) cards.get(idx);
@@ -330,7 +310,6 @@ public class GameController implements GameListener, ActionListener {
                 }
 
             }
-
 //            choosing from heros
             p = switchOnHeros(b);
             if (c == 0) {
@@ -352,11 +331,7 @@ public class GameController implements GameListener, ActionListener {
 
             }
             c++;
-
-
         }
-
-//        ......................
         if (c > 2)
             updateAll ();
 
@@ -364,8 +339,6 @@ public class GameController implements GameListener, ActionListener {
         view.repaint();
         view.revalidate();
     }
-
-
     public void updateAll () {
         updateHeroPanel(view.getCurHeroPanel(),model.getCurrentHero());
         updateHeroPanel(view.getOppoHeroPanel(),model.getOpponent());
@@ -376,18 +349,15 @@ public class GameController implements GameListener, ActionListener {
         updateField(model.getCurrentHero(),view.getCurHeroField(),true);
         updateField(model.getOpponent(),view.getOppoHeroField(),false);
     }
-
-
     public void updateHeroPanel (HeroPanel panel, Hero cur) {
-        panel.getHeroName().setText(cur.getName());
+        String bottom = turnCounter%2==0?"First Player":"Second Player";
+        String top =    turnCounter%2==1?"First Player":"Second Player";
+        panel.getHeroName().setText(cur==model.getCurrentHero()?top:bottom);
         panel.getHeroInfo().setText("Name: " + cur.getName() + "\n" + "Current HP: " + cur.getCurrentHP() + "\n" + "Total mana crystals: " + cur.getTotalManaCrystals() + "\n" + "Current mana crystals: " + cur.getCurrentManaCrystals());
     }
-
     public void updateDeckPanel (HeroDeck panel, Hero cur) {
         panel.getCurHeroDeckInfo().setText("Cards left in your deck:" + "\n" + cur.getDeck().size());
     }
-
-
     public void updateField(Hero hero, JPanel panel,boolean f) {
         panel.removeAll();
         ArrayList<Minion> handModel = hero.getField();
@@ -402,7 +372,6 @@ public class GameController implements GameListener, ActionListener {
             cards.add(c);
         }
     }
-
     public void updateHand(Hero hero,JPanel panel){
         panel.removeAll();
         ArrayList<Card> handModel = hero.getHand();
@@ -415,22 +384,8 @@ public class GameController implements GameListener, ActionListener {
             cards.add(c);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static void main(String[] args) {
         new GameController();
         playSound("sounds/Background Music/Mulligan.wav");
-
     }
 }
