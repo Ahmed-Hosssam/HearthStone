@@ -37,12 +37,13 @@ public class GameController implements GameListener, ActionListener {
     public static ArrayList<JButton> buttons = new ArrayList<>();
     public static ArrayList<Object> cards = new ArrayList<>();
     static int c = 0,turnCounter;
-    private boolean useHeroPower = false;
+    private boolean useHeroPower;
     private Spell castSpell;
 
     public GameController () {
         view = new GameView();
         view.setListener(this);
+        useHeroPower = false;
 //        adding heros to Jpanel
         generateHeros();
 
@@ -171,10 +172,7 @@ public class GameController implements GameListener, ActionListener {
         Hero p = null;
         if (!b.getActionCommand().equals("Exit")) {
 
-
             if (b.getActionCommand().equals("End Turn")) {
-
-                useHeroPower = false;
                 try {
                     model.endTurn();
                     turnCounter++;
@@ -183,9 +181,8 @@ public class GameController implements GameListener, ActionListener {
                 } catch (CloneNotSupportedException ex) {
                     ex.printStackTrace();
                 }
-
-
-
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
             if (b.getActionCommand().equals("select")){
                 int idx = buttons.indexOf(b);
@@ -266,8 +263,7 @@ public class GameController implements GameListener, ActionListener {
                             }
                         }
                     }
-                    useHeroPower = false;
-                    view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+
 
                 }
                 else if (castSpell != null){
@@ -288,7 +284,8 @@ public class GameController implements GameListener, ActionListener {
                     }
                 }
                 castSpell = null;
-
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
 
 
@@ -315,36 +312,35 @@ public class GameController implements GameListener, ActionListener {
                             ex.printStackTrace();
                         }
                     }
-
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
 
             if (b.getActionCommand().equals("Use Hero Power")){
-                int idx = buttons.indexOf(b);
-                Object attacked = cards.get(idx);
-                if (useHeroPower)
-                {
-                        view.getCurHeroPanel().getUseHeroPower().setBackground(null);
-                        useHeroPower = false;
-                }
-                else if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest) {
-                    b.setBackground(Color.GREEN);
-                    useHeroPower = true;
-                }
-                else {
-                    try {
-                        model.getCurrentHero().useHeroPower();
-                    } catch (NotEnoughManaException ex) {
-                        ex.printStackTrace();
-                    } catch (HeroPowerAlreadyUsedException ex) {
-                        ex.printStackTrace();
-                    } catch (NotYourTurnException ex) {
-                        ex.printStackTrace();
-                    } catch (FullHandException ex) {
-                        ex.printStackTrace();
-                    } catch (FullFieldException ex) {
-                        ex.printStackTrace();
-                    } catch (CloneNotSupportedException ex) {
-                        ex.printStackTrace();
+
+                if (useHeroPower){
+//                        view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+//                        useHeroPower = false;
+                }else {
+                    if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest) {
+                        b.setBackground(Color.GREEN);
+                        useHeroPower = true;
+                    } else {
+                        try {
+                            model.getCurrentHero().useHeroPower();
+                        } catch (NotEnoughManaException ex) {
+                            ex.printStackTrace();
+                        } catch (HeroPowerAlreadyUsedException ex) {
+                            ex.printStackTrace();
+                        } catch (NotYourTurnException ex) {
+                            ex.printStackTrace();
+                        } catch (FullHandException ex) {
+                            ex.printStackTrace();
+                        } catch (FullFieldException ex) {
+                            ex.printStackTrace();
+                        } catch (CloneNotSupportedException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             }
@@ -360,7 +356,8 @@ public class GameController implements GameListener, ActionListener {
                 } catch (FullFieldException ex) {
                     ex.printStackTrace();
                 }
-
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
             if (b.getActionCommand().equals("cast")) {
                 int idx = buttons.indexOf(b);
@@ -380,6 +377,8 @@ public class GameController implements GameListener, ActionListener {
                 } catch (NotEnoughManaException ex) {
                     ex.printStackTrace();
                 }
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
 
 //            choosing from heros
@@ -445,8 +444,7 @@ public class GameController implements GameListener, ActionListener {
 
 
 
-        public void updateHeroPanel (HeroPanel panel, Hero cur) {
-        panel.getHeroName().setText(cur.getName());
+
     public void updateHeroPanel (HeroPanel panel, Hero cur) {
         String bottom = turnCounter%2==0?"First Player":"Second Player";
         String top =    turnCounter%2==1?"First Player":"Second Player";
@@ -460,7 +458,6 @@ public class GameController implements GameListener, ActionListener {
     public void updateField(Hero hero, JPanel panel,boolean f) {
         panel.removeAll();
         ArrayList<Minion> handModel = hero.getField();
-
 
         for(Card c : handModel){
             MinionPanel m = new MinionPanel(panel,"field","minion",this,f);
