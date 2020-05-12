@@ -154,6 +154,7 @@ public class GameView extends JFrame {
         positioning(endTurn, getInsets(), getWidth() - 220, (getHeight() / 2) - 30);
         add(endTurn);
 
+
 //
         curHeroPanel.getHeroName().setText(n1);
         oppoHeroPanel.getHeroName().setText(n2);
