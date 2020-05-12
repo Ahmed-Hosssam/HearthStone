@@ -2,7 +2,7 @@ package exceptions;
 
 public class NotEnoughManaException extends HearthstoneException {
     public NotEnoughManaException() {
-        System.out.println("hshshshshsh");
+        super("You don't have enough mana crystals.");
     }
 
     public NotEnoughManaException(String s) {

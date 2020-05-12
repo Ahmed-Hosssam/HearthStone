@@ -12,6 +12,11 @@ import static Controller.GameController.cards;
 
 public class HeroPanel extends JPanel {
     private JTextArea HeroInfo;
+
+    public void setHeroName(JLabel heroName) {
+        HeroName = heroName;
+    }
+
     private JLabel HeroName;
     private JButton useHeroPower;
     private JButton attackHero;

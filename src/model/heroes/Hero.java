@@ -267,7 +267,9 @@ abstract public class Hero implements MinionListener {
     public abstract void buildDeck() throws IOException, CloneNotSupportedException;
     public void useHeroPower() throws NotEnoughManaException,
             HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
-            FullFieldException, CloneNotSupportedException{
+            FullFieldException, CloneNotSupportedException {
+        if (heroPowerUsed)
+            throw new HeroPowerAlreadyUsedException();
         validator.validateTurn(this);
         validator.validateUsingHeroPower(this);
         if(this instanceof Paladin && getField().size()==7)
