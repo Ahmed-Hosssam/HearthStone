@@ -112,8 +112,14 @@ public class GameView extends JFrame {
 
     public void createGamePlay(String n1, String n2) {
 
+
         remove(herosMenue);
         remove(exit);
+        endTurn = new JButton("End Turn");
+        endTurn.setPreferredSize(new Dimension(150, 20));
+
+        positioning(endTurn, getInsets(), getWidth() - 220, (getHeight() / 2) - 30);
+        add(endTurn);
         currPanel = new JPanel();
         currPanel.setPreferredSize(new Dimension(1400, 380));
         size = currPanel.getPreferredSize();
@@ -145,18 +151,16 @@ public class GameView extends JFrame {
         positioning(oppoHeroDeck, oppoPanel.getInsets(), 20, 20);
         oppoHeroHand = new FieldViewPanel(oppoPanel, oppoPanel.getInsets(), 230, 10, "Hand", 10);
         oppoHeroField = new FieldViewPanel(oppoPanel, curHeroHand.getInsets(), 230, curHeroHand.getHeight() + 20, "Field", 7);
-//
 
-        endTurn = new JButton("End Turn");
-        endTurn.setPreferredSize(new Dimension(150, 20));
+
+
         currPanel.setLayout(new BorderLayout());
         oppoPanel.setLayout(new BorderLayout());
-        positioning(endTurn, getInsets(), getWidth() - 220, (getHeight() / 2) - 30);
-        add(endTurn);
 
 //
         curHeroPanel.getHeroName().setText(n1);
         oppoHeroPanel.getHeroName().setText(n2);
+
         pack();
         revalidate();
         repaint();
