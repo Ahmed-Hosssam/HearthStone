@@ -11,6 +11,7 @@ import view.GameView;
 import view.HeroDeck;
 import view.HeroPanel;
 import view.MinionPanel;
+import view.Window;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -186,11 +187,14 @@ public class GameController implements GameListener, ActionListener {
                 try {
                     model.endTurn();
                 } catch (FullHandException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 } catch (CloneNotSupportedException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 }
 
+                String temp = view.getCurHeroPanel().getHeroName().getText();
+                view.getCurHeroPanel().getHeroName().setText(view.getOppoHeroPanel().getHeroName().getText());
+                view.getOppoHeroPanel().getHeroName().setText(temp);
 
 
             }
@@ -207,34 +211,34 @@ public class GameController implements GameListener, ActionListener {
                             try {
                                 ((Mage) model.getCurrentHero()).useHeroPower((Minion) selected);
                             } catch (NotEnoughManaException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (HeroPowerAlreadyUsedException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (NotYourTurnException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (FullHandException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (FullFieldException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (CloneNotSupportedException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             }
                         }
                         else {
                             try {
                                 ((Mage) model.getCurrentHero()).useHeroPower(selected.equals("currentHero")?model.getCurrentHero():model.getOpponent());
                             } catch (NotEnoughManaException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (HeroPowerAlreadyUsedException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (NotYourTurnException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (FullHandException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (FullFieldException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (CloneNotSupportedException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             }
                         }
 
@@ -245,34 +249,34 @@ public class GameController implements GameListener, ActionListener {
                             try {
                                 ((Priest) model.getCurrentHero()).useHeroPower((Minion) selected);
                             } catch (NotEnoughManaException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (HeroPowerAlreadyUsedException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (NotYourTurnException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (FullHandException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (FullFieldException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (CloneNotSupportedException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             }
                         }
                         else {
                             try {
                                 ((Priest) model.getCurrentHero()).useHeroPower(selected.equals("currentHero")?model.getCurrentHero():model.getOpponent());
                             } catch (NotEnoughManaException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (HeroPowerAlreadyUsedException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (NotYourTurnException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (FullHandException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (FullFieldException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             } catch (CloneNotSupportedException ex) {
-                                ex.printStackTrace();
+                                new Window(ex.getMessage());
                             }
                         }
                     }
@@ -290,11 +294,11 @@ public class GameController implements GameListener, ActionListener {
                             model.getCurrentHero().castSpell((LeechingSpell) castSpell,(Minion) selected);
                     }
                     catch (NotYourTurnException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     } catch (NotEnoughManaException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     } catch (InvalidTargetException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     }
                 }
                 castSpell = null;
@@ -314,15 +318,15 @@ public class GameController implements GameListener, ActionListener {
                             else
                                 model.getCurrentHero().attackWithMinion((Minion) selected ,model.getOpponent());
                         } catch (CannotAttackException ex) {
-                            ex.printStackTrace();
+                            new Window(ex.getMessage());
                         } catch (NotYourTurnException ex) {
-                            ex.printStackTrace();
+                            new Window(ex.getMessage());
                         } catch (TauntBypassException ex) {
-                            ex.printStackTrace();
+                            new Window(ex.getMessage());
                         } catch (InvalidTargetException ex) {
-                            ex.printStackTrace();
+                            new Window(ex.getMessage());
                         } catch (NotSummonedException ex) {
-                            ex.printStackTrace();
+                            new Window(ex.getMessage());
                         }
                     }
 
@@ -331,12 +335,8 @@ public class GameController implements GameListener, ActionListener {
             if (b.getActionCommand().equals("Use Hero Power")){
                 int idx = buttons.indexOf(b);
                 Object attacked = cards.get(idx);
-                if (useHeroPower)
-                {
-                        view.getCurHeroPanel().getUseHeroPower().setBackground(null);
-                        useHeroPower = false;
-                }
-                else if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest) {
+
+                if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest) {
                     b.setBackground(Color.GREEN);
                     useHeroPower = true;
                 }
@@ -344,17 +344,17 @@ public class GameController implements GameListener, ActionListener {
                     try {
                         model.getCurrentHero().useHeroPower();
                     } catch (NotEnoughManaException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     } catch (HeroPowerAlreadyUsedException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     } catch (NotYourTurnException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     } catch (FullHandException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     } catch (FullFieldException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     } catch (CloneNotSupportedException ex) {
-                        ex.printStackTrace();
+                        new Window(ex.getMessage());
                     }
                 }
 
@@ -369,11 +369,11 @@ public class GameController implements GameListener, ActionListener {
                 try {
                     model.getCurrentHero().playMinion((Minion) m);
                 } catch (NotYourTurnException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 } catch (NotEnoughManaException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 } catch (FullFieldException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 }
 
             }
@@ -391,9 +391,9 @@ public class GameController implements GameListener, ActionListener {
 
                 }
                 catch (NotYourTurnException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 } catch (NotEnoughManaException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 }
             }
 
@@ -408,12 +408,20 @@ public class GameController implements GameListener, ActionListener {
                 try {
                     model = new Game(p1, p2);
                 } catch (FullHandException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 } catch (CloneNotSupportedException ex) {
-                    ex.printStackTrace();
+                    new Window(ex.getMessage());
                 }
                 model.setListener(this);
                 view.createGamePlay(model.getCurrentHero().getName(),model.getOpponent().getName());
+                if (p1 == model.getCurrentHero()){
+                    view.getCurHeroPanel().getHeroName().setText("Player 1");
+                    view.getOppoHeroPanel().getHeroName().setText("Player 2");
+                }
+                else {
+                    view.getCurHeroPanel().getHeroName().setText("Player 2");
+                    view.getOppoHeroPanel().getHeroName().setText("Player 1");
+                }
                 addingActionListener();
                 updateAll ();
 
@@ -467,7 +475,6 @@ public class GameController implements GameListener, ActionListener {
 
 
         public void updateHeroPanel (HeroPanel panel, Hero cur) {
-        panel.getHeroName().setText(cur.getName());
         panel.getHeroInfo().setText("Name: " + cur.getName() + "\n" + "Current HP: " + cur.getCurrentHP() + "\n" + "Total mana crystals: " + cur.getTotalManaCrystals() + "\n" + "Current mana crystals: " + cur.getCurrentManaCrystals());
 
     }
@@ -496,7 +503,7 @@ public class GameController implements GameListener, ActionListener {
         panel.removeAll();
         ArrayList<Card> handModel = hero.getHand();
 
-        for(Card c : handModel){
+        for(Card c : handModel) {
             MinionPanel m = new MinionPanel(panel,"hand",c instanceof Spell?"spell":"minion",this,false);
             m.getMinionInfo().setText(c.toString());
             buttons.add(m.getSelectButton());
@@ -504,6 +511,9 @@ public class GameController implements GameListener, ActionListener {
             if (c instanceof Spell)
                 setSpellsHoveringText((Spell) c,m);
         }
+        if (hero == model.getOpponent())
+                panel.removeAll();
+
     }
 
 
