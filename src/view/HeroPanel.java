@@ -2,8 +2,13 @@ package view;
 
 
 
+import Controller.GameController;
+
 import javax.swing.*;
 import java.awt.*;
+
+import static Controller.GameController.buttons;
+import static Controller.GameController.cards;
 
 public class HeroPanel extends JPanel {
     private JTextArea HeroInfo;
@@ -22,7 +27,7 @@ public class HeroPanel extends JPanel {
         return useHeroPower;
     }
 
-    public HeroPanel(JPanel panel){
+    public HeroPanel(JPanel panel, GameController listener,boolean f){
 
         setPreferredSize(new Dimension(200,300));
         GameView.positioning(this, panel.getInsets(),(panel.getWidth()) - 210,panel.getHeight()-320);
@@ -35,9 +40,29 @@ public class HeroPanel extends JPanel {
         HeroInfo.setPreferredSize(new Dimension(180,200));
         add(HeroInfo,BorderLayout.CENTER);
         setBorder(BorderFactory.createLineBorder(Color.black));
-        add(useHeroPower,BorderLayout.SOUTH);
+        if (f) {
+            add(useHeroPower, BorderLayout.SOUTH);
+            buttons.add(useHeroPower);
+            cards.add("useHeroPower");
+            JButton select = new JButton("select");
+            add(select,BorderLayout.SOUTH);
+            buttons.add(select);
+            cards.add("currentHero");
+            select.addActionListener(listener);
+        }
         attackHero = new JButton("Attack");
-        add(attackHero,BorderLayout.SOUTH);
+        if (!f) {
+            add(attackHero, BorderLayout.SOUTH);
+            buttons.add(attackHero);
+            cards.add("opponent");
+            JButton select = new JButton("select");
+            add(select,BorderLayout.SOUTH);
+            buttons.add(select);
+            cards.add("opponentHero");
+            select.addActionListener(listener);
+        }
+        attackHero.addActionListener(listener);
+        useHeroPower.addActionListener(listener);
         panel.add(this);
 
     }

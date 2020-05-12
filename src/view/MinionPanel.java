@@ -8,6 +8,8 @@ import model.cards.minions.Minion;
 import javax.swing.*;
 import java.awt.*;
 
+import static Controller.GameController.buttons;
+
 public class MinionPanel extends JPanel {
     private JTextArea MinionInfo;
     private JLabel MinionName;
@@ -27,7 +29,7 @@ public class MinionPanel extends JPanel {
         return selectButton;
     }
 
-    public MinionPanel(JPanel panel,String s,GameController listener){
+    public MinionPanel(JPanel panel,String s,GameController listener,boolean f){
 
         setLayout(new BorderLayout());
         MinionName = new JLabel();
@@ -42,8 +44,12 @@ public class MinionPanel extends JPanel {
         selectButton.addActionListener(listener);
         attackButton = new JButton("Attack");
         if (s.equals("field")) {
-            selectButton.setText("select card");
-            add(attackButton,BorderLayout.NORTH);
+            selectButton.setText("select");
+            if (!f) {
+                add(attackButton, BorderLayout.NORTH);
+                buttons.add(attackButton);
+
+            }
             attackButton.addActionListener(listener);
         }
         add(selectButton,BorderLayout.SOUTH);
