@@ -28,11 +28,15 @@ public class GameController implements GameListener, ActionListener {
     private Hero p2;
     private ArrayList<JButton> herosButtons;
 
-    private Card selected;
+    private Object selected;
+    public static ArrayList<JButton> buttons = new ArrayList<>();
+    public static ArrayList<Object> cards = new ArrayList<>();
     static int c = 0;
+    private boolean useHeroPower = false;
+
     public GameController () {
         view = new GameView();
-
+        view.setListener(this);
 //        adding heros to Jpanel
         generateHeros();
 
@@ -158,6 +162,7 @@ public class GameController implements GameListener, ActionListener {
         if (!b.getActionCommand().equals("Exit")) {
 
             if (b.getActionCommand().equals("End Turn")) {
+                useHeroPower = false;
                 try {
                     model.endTurn();
                 } catch (FullHandException ex) {
@@ -165,31 +170,155 @@ public class GameController implements GameListener, ActionListener {
                 } catch (CloneNotSupportedException ex) {
                     ex.printStackTrace();
                 }
-                updateAll ();
+
 
 
 
 
             }
 
-            if (b.getActionCommand().equals("select card")){
+
+
+            if (b.getActionCommand().equals("select")){
+                int idx = buttons.indexOf(b);
+                selected = cards.get(idx);
+                if (useHeroPower) {
+                    if (model.getCurrentHero() instanceof Mage){
+                        if (selected instanceof Minion) {
+                            try {
+                                ((Mage) model.getCurrentHero()).useHeroPower((Minion) selected);
+                            } catch (NotEnoughManaException ex) {
+                                ex.printStackTrace();
+                            } catch (HeroPowerAlreadyUsedException ex) {
+                                ex.printStackTrace();
+                            } catch (NotYourTurnException ex) {
+                                ex.printStackTrace();
+                            } catch (FullHandException ex) {
+                                ex.printStackTrace();
+                            } catch (FullFieldException ex) {
+                                ex.printStackTrace();
+                            } catch (CloneNotSupportedException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        else {
+                            try {
+                                ((Mage) model.getCurrentHero()).useHeroPower(selected.equals("currentHero")?model.getCurrentHero():model.getOpponent());
+                            } catch (NotEnoughManaException ex) {
+                                ex.printStackTrace();
+                            } catch (HeroPowerAlreadyUsedException ex) {
+                                ex.printStackTrace();
+                            } catch (NotYourTurnException ex) {
+                                ex.printStackTrace();
+                            } catch (FullHandException ex) {
+                                ex.printStackTrace();
+                            } catch (FullFieldException ex) {
+                                ex.printStackTrace();
+                            } catch (CloneNotSupportedException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    else if (model.getCurrentHero() instanceof Priest){
+                        if (selected instanceof Minion) {
+                            try {
+                                ((Priest) model.getCurrentHero()).useHeroPower((Minion) selected);
+                            } catch (NotEnoughManaException ex) {
+                                ex.printStackTrace();
+                            } catch (HeroPowerAlreadyUsedException ex) {
+                                ex.printStackTrace();
+                            } catch (NotYourTurnException ex) {
+                                ex.printStackTrace();
+                            } catch (FullHandException ex) {
+                                ex.printStackTrace();
+                            } catch (FullFieldException ex) {
+                                ex.printStackTrace();
+                            } catch (CloneNotSupportedException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        else {
+                            try {
+                                ((Priest) model.getCurrentHero()).useHeroPower(selected.equals("currentHero")?model.getCurrentHero():model.getOpponent());
+                            } catch (NotEnoughManaException ex) {
+                                ex.printStackTrace();
+                            } catch (HeroPowerAlreadyUsedException ex) {
+                                ex.printStackTrace();
+                            } catch (NotYourTurnException ex) {
+                                ex.printStackTrace();
+                            } catch (FullHandException ex) {
+                                ex.printStackTrace();
+                            } catch (FullFieldException ex) {
+                                ex.printStackTrace();
+                            } catch (CloneNotSupportedException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                    useHeroPower = false;
+                }
 
             }
 
             if (b.getActionCommand().equals("Attack")){
-                    if (selected != null){
+                int idx = buttons.indexOf(b);
+                Object attacked = cards.get(idx);
 
+                    if (selected != null){
+                        try {
+                            if (attacked instanceof Minion)
+                                model.getCurrentHero().attackWithMinion((Minion) selected ,(Minion) attacked);
+                            else
+                                model.getCurrentHero().attackWithMinion((Minion) selected ,model.getOpponent());
+                        } catch (CannotAttackException ex) {
+                            ex.printStackTrace();
+                        } catch (NotYourTurnException ex) {
+                            ex.printStackTrace();
+                        } catch (TauntBypassException ex) {
+                            ex.printStackTrace();
+                        } catch (InvalidTargetException ex) {
+                            ex.printStackTrace();
+                        } catch (NotSummonedException ex) {
+                            ex.printStackTrace();
+                        }
                     }
 
             }
 
             if (b.getActionCommand().equals("Use Hero Power")){
+                int idx = buttons.indexOf(b);
+                Object attacked = cards.get(idx);
+
+                if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest)
+                    useHeroPower = true;
+                else {
+                    try {
+                        model.getCurrentHero().useHeroPower();
+                    } catch (NotEnoughManaException ex) {
+                        ex.printStackTrace();
+                    } catch (HeroPowerAlreadyUsedException ex) {
+                        ex.printStackTrace();
+                    } catch (NotYourTurnException ex) {
+                        ex.printStackTrace();
+                    } catch (FullHandException ex) {
+                        ex.printStackTrace();
+                    } catch (FullFieldException ex) {
+                        ex.printStackTrace();
+                    } catch (CloneNotSupportedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+
+
 
             }
 
             if (b.getActionCommand().equals("add to field")) {
-                int idx = view.getButtons().indexOf(b);
-                Card m = view.getCards().get(idx);
+                int idx = buttons.indexOf(b);
+                Card m = (Card) cards.get(idx);
                 try {
                     model.getCurrentHero().playMinion((Minion) m);
                 } catch (NotYourTurnException ex) {
@@ -199,8 +328,7 @@ public class GameController implements GameListener, ActionListener {
                 } catch (FullFieldException ex) {
                     ex.printStackTrace();
                 }
-                updateField(model.getCurrentHero(),view.getCurHeroField());
-                updateHand(model.getCurrentHero(),view.getCurHeroHand());
+
             }
 
 //            choosing from heros
@@ -222,14 +350,15 @@ public class GameController implements GameListener, ActionListener {
                 addingActionListener();
                 updateAll ();
 
-//
-
-
             }
             c++;
+
+
         }
 
 //        ......................
+        if (c > 2)
+            updateAll ();
 
         view.pack();
         view.repaint();
@@ -244,12 +373,13 @@ public class GameController implements GameListener, ActionListener {
         updateHand(model.getOpponent(),view.getOppoHeroHand());
         updateDeckPanel(view.getCurHeroDeck(),model.getCurrentHero());
         updateDeckPanel(view.getOppoHeroDeck(),model.getOpponent());
-        updateField(model.getCurrentHero(),view.getCurHeroField());
-        updateField(model.getOpponent(),view.getOppoHeroField());
+        updateField(model.getCurrentHero(),view.getCurHeroField(),true);
+        updateField(model.getOpponent(),view.getOppoHeroField(),false);
     }
 
 
     public void updateHeroPanel (HeroPanel panel, Hero cur) {
+        panel.getHeroName().setText(cur.getName());
         panel.getHeroInfo().setText("Name: " + cur.getName() + "\n" + "Current HP: " + cur.getCurrentHP() + "\n" + "Total mana crystals: " + cur.getTotalManaCrystals() + "\n" + "Current mana crystals: " + cur.getCurrentManaCrystals());
     }
 
@@ -258,14 +388,15 @@ public class GameController implements GameListener, ActionListener {
     }
 
 
-    public void updateField(Hero hero, JPanel panel) {
+    public void updateField(Hero hero, JPanel panel,boolean f) {
         panel.removeAll();
         ArrayList<Minion> handModel = hero.getField();
-        ArrayList<JButton> buttons = view.getButtons();
-        ArrayList<Card> cards = view.getCards();
+
 
         for(Card c : handModel){
-            MinionPanel m = new MinionPanel(panel,"field",this);
+            MinionPanel m = new MinionPanel(panel,"field",this,f);
+            if (!f)
+                cards.add(c);
             m.getMinionInfo().setText(c.toString());
             buttons.add(m.getSelectButton());
             cards.add(c);
@@ -275,10 +406,10 @@ public class GameController implements GameListener, ActionListener {
     public void updateHand(Hero hero,JPanel panel){
         panel.removeAll();
         ArrayList<Card> handModel = hero.getHand();
-        ArrayList<JButton>buttons = view.getButtons();
-        ArrayList<Card> cards = view.getCards();
+
         for(Card c : handModel){
-            MinionPanel m = new MinionPanel(panel,"hand",this);
+            MinionPanel m = new MinionPanel(panel,"hand",this,false);
+
             m.getMinionInfo().setText(c.toString());
             buttons.add(m.getSelectButton());
             cards.add(c);

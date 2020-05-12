@@ -38,7 +38,7 @@ public class Mage extends Hero {
     public void useHeroPower(Minion minion) throws
             NotEnoughManaException,
             HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
-            FullFieldException, CloneNotSupportedException{
+            FullFieldException, CloneNotSupportedException {
         super.useHeroPower();
         if(minion.isDivine())
             minion.setDivine(false);
