@@ -14,7 +14,20 @@ public class Window extends JFrame {
         setResizable(false);
         setMinimumSize(new Dimension(getWidth(), getHeight()));
         setMinimumSize(new Dimension(getWidth(), getHeight()));
-        add(new JTextArea(s),BorderLayout.CENTER);
+
+        if (s.length() < 100) {
+            JLabel text = new JLabel(s);
+            add(text, BorderLayout.CENTER);
+        }
+        else {
+            JTextArea text = new JTextArea();
+            text.setText(s);
+            text.setEditable(false);
+            add(text,BorderLayout.CENTER);
+        }
+
+
+
 
         JButton ok = new JButton("Ok");
         ok.addActionListener(new ActionListener() {

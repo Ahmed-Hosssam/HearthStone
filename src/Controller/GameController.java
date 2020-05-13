@@ -13,6 +13,7 @@ import view.HeroPanel;
 import view.MinionPanel;
 import view.Window;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
@@ -156,6 +157,7 @@ public class GameController implements GameListener, ActionListener {
 
     @Override
     public void onGameOver() {
+        playSound("sounds/Class Heroes/Warlock/VO_HERO_07_Death_17.wav");
         String winner = model.getCurrentHero().getCurrentHP() > 0 ?model.getCurrentHero().getName():model.getOpponent().getName();
         GameOver = new JFrame();
         GameOver.setSize(400,100);
@@ -171,6 +173,7 @@ public class GameController implements GameListener, ActionListener {
         GameOver.setVisible(true);
         GameOver.revalidate();
         GameOver.repaint();
+
     }
 
     @Override
@@ -184,6 +187,7 @@ public class GameController implements GameListener, ActionListener {
                 try {
                     model.endTurn();
                 } catch (FullHandException ex) {
+                    ex.playSoundExeption();
                     new Window(ex.getMessage());
                 } catch (CloneNotSupportedException ex) {
                     new Window(ex.getMessage());
@@ -207,14 +211,19 @@ public class GameController implements GameListener, ActionListener {
                             try {
                                 ((Mage) model.getCurrentHero()).useHeroPower((Minion) selected);
                             } catch (NotEnoughManaException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (HeroPowerAlreadyUsedException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (NotYourTurnException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (FullHandException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (FullFieldException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (CloneNotSupportedException ex) {
                                 new Window(ex.getMessage());
@@ -224,14 +233,19 @@ public class GameController implements GameListener, ActionListener {
                             try {
                                 ((Mage) model.getCurrentHero()).useHeroPower(selected.equals("currentHero")?model.getCurrentHero():model.getOpponent());
                             } catch (NotEnoughManaException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (HeroPowerAlreadyUsedException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (NotYourTurnException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (FullHandException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (FullFieldException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (CloneNotSupportedException ex) {
                                 new Window(ex.getMessage());
@@ -245,14 +259,19 @@ public class GameController implements GameListener, ActionListener {
                             try {
                                 ((Priest) model.getCurrentHero()).useHeroPower((Minion) selected);
                             } catch (NotEnoughManaException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (HeroPowerAlreadyUsedException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (NotYourTurnException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (FullHandException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (FullFieldException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (CloneNotSupportedException ex) {
                                 new Window(ex.getMessage());
@@ -262,14 +281,19 @@ public class GameController implements GameListener, ActionListener {
                             try {
                                 ((Priest) model.getCurrentHero()).useHeroPower(selected.equals("currentHero")?model.getCurrentHero():model.getOpponent());
                             } catch (NotEnoughManaException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (HeroPowerAlreadyUsedException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (NotYourTurnException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (FullHandException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (FullFieldException ex) {
+                                ex.playSoundExeption();
                                 new Window(ex.getMessage());
                             } catch (CloneNotSupportedException ex) {
                                 new Window(ex.getMessage());
@@ -289,10 +313,13 @@ public class GameController implements GameListener, ActionListener {
                             model.getCurrentHero().castSpell((LeechingSpell) castSpell,(Minion) selected);
                     }
                     catch (NotYourTurnException ex) {
+                        ex.playSoundExeption();
                         new Window(ex.getMessage());
                     } catch (NotEnoughManaException ex) {
+                        ex.playSoundExeption();
                         new Window(ex.getMessage());
                     } catch (InvalidTargetException ex) {
+                        ex.playSoundExeption();
                         new Window(ex.getMessage());
                     }
                 }
@@ -315,14 +342,18 @@ public class GameController implements GameListener, ActionListener {
                                 model.getCurrentHero().attackWithMinion((Minion) selected ,model.getOpponent());
                         } catch (CannotAttackException ex) {
                             new Window(ex.getMessage());
-//                            ex.playSoundExeption();
+                            ex.playSoundExeption();
                         } catch (NotYourTurnException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         } catch (TauntBypassException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         } catch (InvalidTargetException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         } catch (NotSummonedException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         }
                     }
@@ -343,14 +374,19 @@ public class GameController implements GameListener, ActionListener {
                         try {
                             model.getCurrentHero().useHeroPower();
                         } catch (NotEnoughManaException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         } catch (HeroPowerAlreadyUsedException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         } catch (NotYourTurnException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         } catch (FullHandException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         } catch (FullFieldException ex) {
+                            ex.playSoundExeption();
                             new Window(ex.getMessage());
                         } catch (CloneNotSupportedException ex) {
                             new Window(ex.getMessage());
@@ -364,10 +400,13 @@ public class GameController implements GameListener, ActionListener {
                 try {
                     model.getCurrentHero().playMinion((Minion) m);
                 } catch (NotYourTurnException ex) {
+                    ex.playSoundExeption();
                     new Window(ex.getMessage());
                 } catch (NotEnoughManaException ex) {
+                    ex.playSoundExeption();
                     new Window(ex.getMessage());
                 } catch (FullFieldException ex) {
+                    ex.playSoundExeption();
                     new Window(ex.getMessage());
                 }
                 view.getCurHeroPanel().getUseHeroPower().setBackground(null);
@@ -387,8 +426,10 @@ public class GameController implements GameListener, ActionListener {
 
                 }
                 catch (NotYourTurnException ex) {
+                    ex.playSoundExeption();
                     new Window(ex.getMessage());
                 } catch (NotEnoughManaException ex) {
+                    ex.playSoundExeption();
                     new Window(ex.getMessage());
                 }
                 view.getCurHeroPanel().getUseHeroPower().setBackground(null);
@@ -406,6 +447,7 @@ public class GameController implements GameListener, ActionListener {
                 try {
                     model = new Game(p1, p2);
                 } catch (FullHandException ex) {
+                    ex.playSoundExeption();
                     new Window(ex.getMessage());
                 } catch (CloneNotSupportedException ex) {
                     new Window(ex.getMessage());
@@ -473,11 +515,13 @@ public class GameController implements GameListener, ActionListener {
 
 
         public void updateHeroPanel (HeroPanel panel, Hero cur) {
+
         panel.getHeroInfo().setText("Name: " + cur.getName() + "\n" + "Current HP: " + cur.getCurrentHP() + "\n" + "Total mana crystals: " + cur.getTotalManaCrystals() + "\n" + "Current mana crystals: " + cur.getCurrentManaCrystals());
 
     }
 
     public void updateDeckPanel (HeroDeck panel, Hero cur) {
+
         panel.getCurHeroDeckInfo().setText("Cards left in your deck:" + "\n" + cur.getDeck().size());
     }
     public void updateField(Hero hero, JPanel panel,boolean f) {
@@ -506,9 +550,10 @@ public class GameController implements GameListener, ActionListener {
                 if (c instanceof Spell)
                     setSpellsHoveringText((Spell) c, m);
             }else{
-                JPanel backOfCard = new JPanel();
+                ImageIcon icon = new ImageIcon("images/cardback.png");
+                JLabel backOfCard = new JLabel();
+                backOfCard.setIcon(icon);
 
-                backOfCard.add(new JTextArea("Back Of Card"));
                 panel.add(backOfCard);
             }
         }
@@ -568,7 +613,7 @@ public static void setHoveringText(JButton b,String text) {
 
     public static void main(String[] args) {
         new GameController();
-        playSound("sounds/Background Music/Mulligan.wav");
+        playSound("sounds/Legendary Cards/Card Sound Effects/Battle_Play_Stinger_3.wav");
 
     }
 }

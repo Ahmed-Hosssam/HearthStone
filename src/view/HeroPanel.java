@@ -5,13 +5,16 @@ package view;
 import Controller.GameController;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 import static Controller.GameController.buttons;
 import static Controller.GameController.cards;
 
 public class HeroPanel extends JPanel {
-    private JTextArea HeroInfo;
+    private JTextPane HeroInfo;
 
     public void setHeroName(JLabel heroName) {
         HeroName = heroName;
@@ -20,7 +23,7 @@ public class HeroPanel extends JPanel {
     private JLabel HeroName;
     private JButton useHeroPower;
     private JButton attackHero;
-    public JTextArea getHeroInfo() {
+    public JTextPane getHeroInfo() {
         return HeroInfo;
     }
 
@@ -39,12 +42,12 @@ public class HeroPanel extends JPanel {
         HeroName = new JLabel();
         useHeroPower = new JButton("Use Hero Power");
         add(HeroName,BorderLayout.NORTH);
-        HeroInfo = new JTextArea();
+        HeroInfo = new JTextPane();
         HeroInfo.setText("name:\n current HP:");
         HeroInfo.setEditable(false);
         HeroInfo.setPreferredSize(new Dimension(180,200));
         add(HeroInfo,BorderLayout.CENTER);
-        setBorder(BorderFactory.createLineBorder(Color.black));
+        setBorder(BorderFactory.createLineBorder(Color.white));
         if (f) {
             add(useHeroPower, BorderLayout.SOUTH);
             buttons.add(useHeroPower);
@@ -66,8 +69,16 @@ public class HeroPanel extends JPanel {
             cards.add("opponentHero");
             select.addActionListener(listener);
         }
+        StyledDocument doc = HeroInfo.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
         attackHero.addActionListener(listener);
         useHeroPower.addActionListener(listener);
+        Font font = new Font("SERIF", Font.PLAIN, 16);
+        HeroInfo.setFont(font);
+
+        HeroName.setForeground(Color.white);
         panel.add(this);
 
     }

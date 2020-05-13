@@ -12,8 +12,8 @@ public class CannotAttackException extends HearthstoneException {
         super(s);
     }
 
-//    public void playSoundExeption (){
-//        playSound("sounds/Class Heroes/Mage/YouCanNotAttackThisCard.wav");
-//    }
+    public void playSoundExeption (){
+        playSound("sounds/Class Heroes/Hunter/YouCanNotAttackThisCard.wav");
+    }
 
 }

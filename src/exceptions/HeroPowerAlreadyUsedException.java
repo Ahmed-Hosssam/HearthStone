@@ -1,5 +1,7 @@
 package exceptions;
 
+import static Controller.GameController.playSound;
+
 public class HeroPowerAlreadyUsedException extends HearthstoneException {
 
     public HeroPowerAlreadyUsedException() {
@@ -8,5 +10,10 @@ public class HeroPowerAlreadyUsedException extends HearthstoneException {
 
     public HeroPowerAlreadyUsedException(String s) {
         super(s);
+    }
+
+    @Override
+    public void playSoundExeption() {
+        playSound("sounds/Class Heroes/Mage/VO_HERO_08_ERROR12_86.wav");
     }
 }

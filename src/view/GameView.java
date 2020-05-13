@@ -33,7 +33,7 @@ public class GameView extends JFrame {
     private boolean f = true;
     private HeroPanel curHeroPanel;
     private HeroDeck curHeroDeck;
-
+    private Font font;
     public GameController getListener() {
         return listener;
     }
@@ -124,12 +124,12 @@ public class GameView extends JFrame {
         currPanel.setPreferredSize(new Dimension(1400, 380));
         size = currPanel.getPreferredSize();
         currPanel.setBounds(insets.left + 10, insets.right + 10, size.width, size.height);
-        currPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        //currPanel.setBorder(BorderFactory.createLineBorder(Color.white));
         oppoPanel = new JPanel();
         oppoPanel.setPreferredSize(new Dimension(1400, 380));
         size = oppoPanel.getPreferredSize();
         oppoPanel.setBounds(insets.left + 10, insets.right + 10 + currPanel.getHeight(), size.width, size.height);
-        oppoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        //oppoPanel.setBorder(BorderFactory.createLineBorder(Color.white));
         JPanel temp = currPanel;
         currPanel = oppoPanel;
         oppoPanel = temp;
@@ -146,13 +146,11 @@ public class GameView extends JFrame {
         curHeroHand = new FieldViewPanel(currPanel, curHeroField.getInsets(), 230, curHeroField.getHeight() + 20, "Hand", 10);
 // Filling Opponent Side
         oppoHeroPanel = new HeroPanel(oppoPanel,listener,false);
-        positioning(oppoHeroPanel, oppoPanel.getInsets(), (oppoPanel.getWidth()) - 210, 20);
         oppoHeroDeck = new HeroDeck(oppoPanel);
-        positioning(oppoHeroDeck, oppoPanel.getInsets(), 20, 20);
         oppoHeroHand = new FieldViewPanel(oppoPanel, oppoPanel.getInsets(), 230, 10, "Hand", 10);
         oppoHeroField = new FieldViewPanel(oppoPanel, curHeroHand.getInsets(), 230, curHeroHand.getHeight() + 20, "Field", 7);
-
-
+        positioning(oppoHeroPanel, oppoPanel.getInsets(), (oppoPanel.getWidth()) - 210, 20);
+        positioning(oppoHeroDeck, oppoPanel.getInsets(), 20, 20);
 
         currPanel.setLayout(new BorderLayout());
         oppoPanel.setLayout(new BorderLayout());
@@ -162,6 +160,17 @@ public class GameView extends JFrame {
         curHeroPanel.getHeroName().setText(n1);
         oppoHeroPanel.getHeroName().setText(n2);
 
+        currPanel.setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+        oppoPanel.setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+        curHeroPanel.setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+        curHeroDeck .setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+        curHeroField.setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+        oppoHeroPanel .setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+        oppoHeroDeck .setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+        oppoHeroHand .setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+        oppoHeroField.setBackground(new Color(0.0f, 0.0f, 0.0f, 0.1f));
+
+        GameController.playSound("sounds/Background Music/The_Forge.wav");
         pack();
         revalidate();
         repaint();
@@ -221,7 +230,7 @@ public class GameView extends JFrame {
         c.setBounds(insets.left + x, insets.right + y, size.width, size.height);
     }
 
-    class ImagePanel extends JComponent {
+    public class ImagePanel extends JComponent {
         private Image image;
 
         public ImagePanel(Image image) {

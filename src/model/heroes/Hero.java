@@ -1,5 +1,6 @@
 package model.heroes;
 
+import Controller.GameController;
 import engine.ActionValidator;
 import exceptions.*;
 import exceptions.InvalidTargetException;
@@ -260,7 +261,7 @@ abstract public class Hero implements MinionListener {
                     break;
                 }
         }
-
+        GameController.playSound("sounds/UI Sound Effects/draw_card_1.wav");
         return drawn;
     }
 
@@ -287,6 +288,8 @@ abstract public class Hero implements MinionListener {
         setCurrentManaCrystals(getCurrentManaCrystals()-m.getManaCost());
         getHand().remove(m);
         getField().add(m);
+        GameController.playSound("sounds/UI Sound Effects/add_card_to_hand_1.wav");
+
     }
     public void attackWithMinion(Minion attacker, Minion target) throws
             CannotAttackException, NotYourTurnException, TauntBypassException,
@@ -306,6 +309,8 @@ abstract public class Hero implements MinionListener {
 
     @Override
     public void onMinionDeath(Minion m) {
+
         getField().remove(m);
+
     }
 }

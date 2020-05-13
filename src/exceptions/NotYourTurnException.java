@@ -1,5 +1,7 @@
 package exceptions;
 
+import static Controller.GameController.playSound;
+
 public class NotYourTurnException extends HearthstoneException {
     public NotYourTurnException() {
 
@@ -8,5 +10,10 @@ public class NotYourTurnException extends HearthstoneException {
 
     public NotYourTurnException(String s) {
         super(s);
+    }
+
+    @Override
+    public void playSoundExeption() {
+        playSound("sounds/Class Heroes/Hunter/YouCanNotAttackThisCard.wav");
     }
 }

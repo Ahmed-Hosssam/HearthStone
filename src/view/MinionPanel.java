@@ -6,18 +6,21 @@ import Controller.GameController;
 import model.cards.minions.Minion;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 import static Controller.GameController.buttons;
 
 public class MinionPanel extends JPanel {
-    private JTextArea MinionInfo;
+    private JTextPane MinionInfo;
     private JLabel MinionName;
     private JButton selectButton;
     private JButton attackButton;
     private String cardType;
 
-    public JTextArea getMinionInfo() {
+    public JTextPane getMinionInfo() {
         return MinionInfo;
     }
 
@@ -44,12 +47,12 @@ public class MinionPanel extends JPanel {
         selectButton = new JButton("add to field");
 
         add(MinionName,BorderLayout.NORTH);
-        MinionInfo = new JTextArea();
+        MinionInfo = new JTextPane();
         MinionInfo.setText("");
         MinionInfo.setEditable(false);
         MinionInfo.setPreferredSize(new Dimension(180,200));
         add(MinionInfo,BorderLayout.CENTER);
-        setBorder(BorderFactory.createLineBorder(Color.black));
+        setBorder(BorderFactory.createLineBorder(Color.white));
         selectButton.addActionListener(listener);
         attackButton = new JButton("Attack");
         if (s.equals("field")) {
@@ -64,7 +67,14 @@ public class MinionPanel extends JPanel {
         if (cardType.equals("spell")) {
             selectButton.setText("cast");
         }
+        StyledDocument doc = MinionInfo.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
         add(selectButton,BorderLayout.SOUTH);
+
+        Font font = new Font("SERIF", Font.BOLD, 10);
+        MinionInfo.setFont(font);
 
         panel.add(this);
 
