@@ -13,6 +13,7 @@ public class Polymorph extends Spell implements MinionTargetSpell {
 
     @Override
     public void performAction(Minion m) throws InvalidTargetException {
+
         m.setCurrentHP(1);
         m.setAttack(1);
         m.setDivine(false);

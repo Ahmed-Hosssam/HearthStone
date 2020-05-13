@@ -180,10 +180,7 @@ public class GameController implements GameListener, ActionListener {
         Hero p = null;
         if (!b.getActionCommand().equals("Exit")) {
 
-
             if (b.getActionCommand().equals("End Turn")) {
-
-                useHeroPower = false;
                 try {
                     model.endTurn();
                 } catch (FullHandException ex) {
@@ -197,10 +194,9 @@ public class GameController implements GameListener, ActionListener {
                 view.getOppoHeroPanel().getHeroName().setText(temp);
 
 
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
-
-
-
             if (b.getActionCommand().equals("select")){
                 int idx = buttons.indexOf(b);
                 selected = cards.get(idx);
@@ -280,8 +276,7 @@ public class GameController implements GameListener, ActionListener {
                             }
                         }
                     }
-                    useHeroPower = false;
-                    view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+
 
                 }
                 else if (castSpell != null){
@@ -302,7 +297,8 @@ public class GameController implements GameListener, ActionListener {
                     }
                 }
                 castSpell = null;
-
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
 
 
@@ -330,40 +326,38 @@ public class GameController implements GameListener, ActionListener {
                             new Window(ex.getMessage());
                         }
                     }
-
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
 
             if (b.getActionCommand().equals("Use Hero Power")){
-                int idx = buttons.indexOf(b);
-                Object attacked = cards.get(idx);
 
-                if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest) {
-                    b.setBackground(Color.GREEN);
-                    useHeroPower = true;
-                }
-                else {
-                    try {
-                        model.getCurrentHero().useHeroPower();
-                    } catch (NotEnoughManaException ex) {
-                        new Window(ex.getMessage());
-                    } catch (HeroPowerAlreadyUsedException ex) {
-                        new Window(ex.getMessage());
-                    } catch (NotYourTurnException ex) {
-                        new Window(ex.getMessage());
-                    } catch (FullHandException ex) {
-                        new Window(ex.getMessage());
-                    } catch (FullFieldException ex) {
-                        new Window(ex.getMessage());
-                    } catch (CloneNotSupportedException ex) {
-                        new Window(ex.getMessage());
+                if (useHeroPower){
+//                        view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+//                        useHeroPower = false;
+                }else {
+                    if (model.getCurrentHero() instanceof Mage || model.getCurrentHero() instanceof Priest) {
+                        b.setBackground(Color.GREEN);
+                        useHeroPower = true;
+                    } else {
+                        try {
+                            model.getCurrentHero().useHeroPower();
+                        } catch (NotEnoughManaException ex) {
+                            new Window(ex.getMessage());
+                        } catch (HeroPowerAlreadyUsedException ex) {
+                            new Window(ex.getMessage());
+                        } catch (NotYourTurnException ex) {
+                            new Window(ex.getMessage());
+                        } catch (FullHandException ex) {
+                            new Window(ex.getMessage());
+                        } catch (FullFieldException ex) {
+                            new Window(ex.getMessage());
+                        } catch (CloneNotSupportedException ex) {
+                            new Window(ex.getMessage());
+                        }
                     }
                 }
-
-
-
-
             }
-
             if (b.getActionCommand().equals("add to field")) {
                 int idx = buttons.indexOf(b);
                 Card m = (Card) cards.get(idx);
@@ -376,7 +370,8 @@ public class GameController implements GameListener, ActionListener {
                 } catch (FullFieldException ex) {
                     new Window(ex.getMessage());
                 }
-
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
             if (b.getActionCommand().equals("cast")) {
                 int idx = buttons.indexOf(b);
@@ -396,6 +391,8 @@ public class GameController implements GameListener, ActionListener {
                 } catch (NotEnoughManaException ex) {
                     new Window(ex.getMessage());
                 }
+                view.getCurHeroPanel().getUseHeroPower().setBackground(null);
+                useHeroPower = false;
             }
 
 //            choosing from heros
@@ -483,12 +480,9 @@ public class GameController implements GameListener, ActionListener {
     public void updateDeckPanel (HeroDeck panel, Hero cur) {
         panel.getCurHeroDeckInfo().setText("Cards left in your deck:" + "\n" + cur.getDeck().size());
     }
-
-
     public void updateField(Hero hero, JPanel panel,boolean f) {
         panel.removeAll();
         ArrayList<Minion> handModel = hero.getField();
-
 
         for(Card c : handModel){
             MinionPanel m = new MinionPanel(panel,"field","minion",this,f);
@@ -499,12 +493,11 @@ public class GameController implements GameListener, ActionListener {
             cards.add(c);
         }
     }
-
     public void updateHand(Hero hero,JPanel panel){
         panel.removeAll();
         ArrayList<Card> handModel = hero.getHand();
 
-        for(Card c : handModel) {
+        for(Card c : handModel){
             MinionPanel m = new MinionPanel(panel,"hand",c instanceof Spell?"spell":"minion",this,false);
             m.getMinionInfo().setText(c.toString());
             buttons.add(m.getSelectButton());
