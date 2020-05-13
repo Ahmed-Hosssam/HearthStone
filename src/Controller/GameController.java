@@ -73,7 +73,7 @@ public class GameController implements GameListener, ActionListener {
             view.getHerosMenue().add(b);
         }
     }
-     static void playSound(String soundFile) {
+     public static void playSound(String soundFile) {
          AudioInputStream audioInputStream = null;
          try {
              audioInputStream = AudioSystem.getAudioInputStream(new File(soundFile).getAbsoluteFile());
@@ -315,6 +315,7 @@ public class GameController implements GameListener, ActionListener {
                                 model.getCurrentHero().attackWithMinion((Minion) selected ,model.getOpponent());
                         } catch (CannotAttackException ex) {
                             new Window(ex.getMessage());
+//                            ex.playSoundExeption();
                         } catch (NotYourTurnException ex) {
                             new Window(ex.getMessage());
                         } catch (TauntBypassException ex) {
@@ -544,6 +545,9 @@ public static void setSpellsHoveringText (Spell s, MinionPanel p) {
             setHoveringText(p.getSelectButton(),"Increases the attack of a minion by 3 and gives it divine shield." + "\n" + " Please select a minion after pressing cast.");
         else if (s instanceof SiphonSoul)
             setHoveringText(p.getSelectButton(),"Destroys a minion even if it has a divine shield and restores 3 health points to the hero." + "\n" + " Please select a minion after pressing cast.");
+        else if (s instanceof ShadowWordDeath)
+            setHoveringText(p.getSelectButton(),"Destroys a minion that his attack is 5 or more even if it has a divine shield." + "\n" + " Please select a minion after pressing cast.");
+
         else
             setHoveringText(p.getSelectButton(),"Destroys all minions of both heroes even if any of them has a divine shield.");
 }
