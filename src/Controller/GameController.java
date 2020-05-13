@@ -188,7 +188,7 @@ public class GameController implements GameListener, ActionListener {
                 } catch (CloneNotSupportedException ex) {
                     new Window(ex.getMessage());
                 }
-
+                castSpell = null;
                 String temp = view.getCurHeroPanel().getHeroName().getText();
                 view.getCurHeroPanel().getHeroName().setText(view.getOppoHeroPanel().getHeroName().getText());
                 view.getOppoHeroPanel().getHeroName().setText(temp);
@@ -497,15 +497,21 @@ public class GameController implements GameListener, ActionListener {
         ArrayList<Card> handModel = hero.getHand();
 
         for(Card c : handModel){
-            MinionPanel m = new MinionPanel(panel,"hand",c instanceof Spell?"spell":"minion",this,false);
-            m.getMinionInfo().setText(c.toString());
-            buttons.add(m.getSelectButton());
-            cards.add(c);
-            if (c instanceof Spell)
-                setSpellsHoveringText((Spell) c,m);
+            if(hero==model.getCurrentHero()) {
+                MinionPanel m = new MinionPanel(panel, "hand", c instanceof Spell ? "spell" : "minion", this, false);
+                m.getMinionInfo().setText(c.toString());
+                buttons.add(m.getSelectButton());
+                cards.add(c);
+                if (c instanceof Spell)
+                    setSpellsHoveringText((Spell) c, m);
+            }else{
+                JPanel backOfCard = new JPanel();
+
+                backOfCard.add(new JTextArea("Back Of Card"));
+                panel.add(backOfCard);
+            }
         }
-        if (hero == model.getOpponent())
-                panel.removeAll();
+
 
     }
 
