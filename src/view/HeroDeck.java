@@ -20,7 +20,7 @@ public class HeroDeck extends JPanel {
         curHeroDeckInfo.setText("name:\n current HP:");
         curHeroDeckInfo.setEditable(false);
         curHeroDeckInfo.setPreferredSize(new Dimension(180,240));
-        setBorder(BorderFactory.createLineBorder(Color.white));
+       // setBorder(BorderFactory.createLineBorder(Color.white));
         add(curHeroDeckInfo);
         StyledDocument doc = curHeroDeckInfo.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -29,6 +29,8 @@ public class HeroDeck extends JPanel {
 
         Font font = new Font("SERIF", Font.PLAIN, 16);
         curHeroDeckInfo.setFont(font);
+        curHeroDeckInfo.setBackground(Color.lightGray);
+        curHeroDeckInfo.setForeground(Color.darkGray);
         panel.add(this);
 
 

@@ -69,7 +69,11 @@ public class GameController implements GameListener, ActionListener {
         herosButtons.add(new JButton("Priest"));
         herosButtons.add(new JButton("Warlock"));
         for (int i=0;i<herosButtons.size();i++) {
-            JButton b = herosButtons.get(i);
+           JButton b = herosButtons.get(i);
+           Font font = new Font("SERIF", Font.BOLD, 16);
+            //b.setBackground(Color.darkGray);
+            //b.setForeground(Color.lightGray);
+            b.setFont(font);
             b.addActionListener(this);
             view.getHerosMenue().add(b);
         }

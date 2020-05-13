@@ -75,7 +75,8 @@ public class MinionPanel extends JPanel {
 
         Font font = new Font("SERIF", Font.BOLD, 10);
         MinionInfo.setFont(font);
-
+        MinionInfo.setBackground(Color.lightGray);
+        MinionInfo.setForeground(Color.darkGray);
         panel.add(this);
 
     }

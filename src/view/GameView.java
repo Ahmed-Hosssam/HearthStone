@@ -84,6 +84,11 @@ public class GameView extends JFrame {
         herosMenue.add(herosMenueLabel);
         herosMenueLabel.setHorizontalAlignment(SwingConstants.CENTER);
         herosMenueLabel.setVerticalAlignment(SwingConstants.CENTER);
+        herosMenueLabel.setBackground(new Color(0.1f,0.1f,0.1f,0.8f));
+        herosMenueLabel.setForeground(Color.white);
+        font = new Font("SERIF", Font.BOLD, 16);
+        herosMenueLabel.setFont(font);
+        herosMenue.setBackground(new Color(0.1f,0.1f,0.1f,0.5f));
         add(herosMenue);
         herosMenue.setPreferredSize(new Dimension(400, getHeight() - 100));
         size = herosMenue.getPreferredSize();

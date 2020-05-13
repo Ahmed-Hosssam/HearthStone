@@ -14,6 +14,6 @@ public class NotYourTurnException extends HearthstoneException {
 
     @Override
     public void playSoundExeption() {
-        playSound("sounds/Class Heroes/Hunter/YouCanNotAttackThisCard.wav");
+        playSound("sounds/Class Heroes/Mage/VO_HERO_08_ERROR12_86.wav");
     }
 }

@@ -47,7 +47,7 @@ public class HeroPanel extends JPanel {
         HeroInfo.setEditable(false);
         HeroInfo.setPreferredSize(new Dimension(180,200));
         add(HeroInfo,BorderLayout.CENTER);
-        setBorder(BorderFactory.createLineBorder(Color.white));
+        //setBorder(BorderFactory.createLineBorder(Color.white));
         if (f) {
             add(useHeroPower, BorderLayout.SOUTH);
             buttons.add(useHeroPower);
@@ -77,7 +77,8 @@ public class HeroPanel extends JPanel {
         useHeroPower.addActionListener(listener);
         Font font = new Font("SERIF", Font.PLAIN, 16);
         HeroInfo.setFont(font);
-
+        HeroInfo.setBackground(Color.lightGray);
+        HeroInfo.setForeground(Color.darkGray);
         HeroName.setForeground(Color.white);
         panel.add(this);
 
