@@ -1,0 +1,17 @@
+Selecting the heros :
+The "First Player" clicks on the type of hero on the first screen of the game,this will show the second screen where the "Second Player" will choose the hero by also clicking on the type of hero.
+
+Orientation : 
+The current hero is always on the bottom side of the screen . The panel on the bottom right will specify whether it is the "First Player" or the "Second Player".
+
+Playing a minion : click on the "add to field" button on the minion.
+
+Casting a spell : (Hovering the mouse over a spell will tell you what it does)
+		  1- if the spell requires a target (hero / minion) , click the "cast" button on the spell then click the "select" button on the target.
+		  2- if the spell does not require a target , click the "cast" button.
+
+Attacking : click the "select" button on the attacking minion then click the "attack" button on the target (opponent hero / minion).
+
+Ending the turn : click the "end turn" button on the right.
+
+
