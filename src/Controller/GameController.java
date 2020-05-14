@@ -325,6 +325,10 @@ public class GameController implements GameListener, ActionListener {
                     } catch (InvalidTargetException ex) {
                         ex.playSoundExeption();
                         new Window(ex.getMessage());
+                    }catch(ClassCastException ex){
+                        InvalidTargetException exx = new InvalidTargetException();
+                        exx.playSoundExeption();
+                        new Window(exx.getMessage());
                     }
                 }
                 castSpell = null;

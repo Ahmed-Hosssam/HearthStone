@@ -14,6 +14,7 @@ public class FieldViewPanel extends JPanel {
         setLayout(new GridLayout(1,size));
 
 
+
     }
 
 }
